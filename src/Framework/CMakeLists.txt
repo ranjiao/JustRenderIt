@@ -6,7 +6,6 @@ IF(MSVC)
   ADD_DEFINITIONS(-D_USRDLL)
 ENDIF(MSVC)
 
-
 # Find out all source files
 FILE(GLOB APP_HEADER "App/*.h")
 FILE(GLOB APP_SRC "App/*.cpp")
@@ -24,6 +23,9 @@ ENDIF(UNIX)
 
 FILE(GLOB QT_HEADER "App/Qt/*.h")
 FILE(GLOB QT_SRC "App/Qt/*.cpp")
+
+# Deal with Qt files
+QT4_WRAP_CPP(QT_GENERATED_SRC ${QT_HEADER})
 
 FILE(GLOB_RECURSE ENTITY_HEADER "Entity/*.h")
 FILE(GLOB_RECURSE ENTITY_SRC "Entity/*.cpp")
@@ -85,7 +87,7 @@ LINK_DIRECTORIES(${launcher_SOURCE_DIR}/../../Dependencies/Lib)
 SET(FrameSources
   ${APP_SRC} ${APP_HEADER}
   ${APP_WIN32_SRC} ${APP_WIN32_HEADER}
-  ${QT_SRC} ${QT_HEADER}
+  ${QT_SRC} ${QT_HEADER} ${QT_GENERATED_SRC}
   ${CONSOLE_SRC} ${CONSOLE_HEADER}
   ${GRAPHICS_SRC} ${GRAPHICS_HEADER}
   ${OPENGL_SRC} ${OPENGL_HEADER} ${OPENGL_C_SRC}
@@ -101,6 +103,7 @@ SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES})
 
 IF(WIN32)
   LIST(APPEND FrameLibraries cgD3D9)
+  LIST(APPEND FrameLibraries GLUT32)
 ENDIF(WIN32)
 
 IF(LINUX)

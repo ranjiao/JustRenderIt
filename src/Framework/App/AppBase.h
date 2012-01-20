@@ -7,6 +7,8 @@
 
 #if defined USE_GUI_QT
 #define NATIVE_APP QtApp
+
+#ifndef WIN32
 #define APP_MAIN_IMPLEMENTATION(klass)  \
 int main(int argc, char *argv[])        \
 {                                       \
@@ -16,6 +18,19 @@ int main(int argc, char *argv[])        \
   delete app;                           \
   return 0;                             \
 }
+#else
+#define APP_MAIN_IMPLEMENTATION(klass)  \
+  int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hLastInst,  \
+  LPSTR lpszCmdLine, int nCmdShow)      \
+{                                       \
+  QtApp *app = new klass();             \
+  app->InitApp();                       \
+  app->StartLoop();                     \
+  delete app;                           \
+  return 0;                             \
+}
+#endif
+
 #elif defined WIN32
 #define NATIVE_APP WindowsApp
 #define APP_MAIN_IMPLEMENTATION(klass)                                \
