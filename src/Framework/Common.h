@@ -66,13 +66,13 @@ typedef std::string STRING;
 namespace JustRenderIt
 {
   /// Exception class used by all classes in myFramework
-  class MyException
+  class JRIException
   {
   protected:
     STRING m_msg;
   public:
-    MyException(STRING msg);
-    virtual ~MyException(){}
+    JRIException(STRING msg){ m_msg = msg; };
+    virtual ~JRIException(){}
     STRING GetMessage(){ return m_msg; };
   };
 
