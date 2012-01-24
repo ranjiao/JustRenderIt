@@ -2,6 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 PROJECT(Tests)
 
+LINK_DIRECTORIES(${GLOBAL_ROOT}/bin)
+
 IF(MSVC)
   ADD_DEFINITIONS(-D_USRDLL)
 ENDIF()
@@ -11,7 +13,7 @@ FOREACH(source ${sources})
   GET_FILENAME_COMPONENT(ExeName ${source} NAME_WE)
   ADD_EXECUTABLE(${ExeName} ${source})
   MESSAGE("Auto loading unit test ${ExeName}")
-  TARGET_LINK_LIBRARIES(${ExeName} gtest gtest_main pthread)
+  TARGET_LINK_LIBRARIES(${ExeName} gtest gtest_main pthread Framework)
 ENDFOREACH()
 
 SET(EXECUTABLE_OUTPUT_PATH ${GLOBAL_OUTPUT_PATH})

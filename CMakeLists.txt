@@ -12,11 +12,13 @@ PROJECT(JustRenderIt)
 INCLUDE_DIRECTORIES(${GLOBAL_ROOT}/Dependencies/Include)
 INCLUDE_DIRECTORIES(${GLOBAL_ROOT}/src/Framework)
 LINK_DIRECTORIES(${GLOBAL_ROOT}/Dependencies/Lib)
+LINK_DIRECTORIES(${GLOBAL_ROOT}/bin)
 
 # OS detection
 IF(UNIX)
   MESSAGE("Building in Linux like system")
   ADD_DEFINITIONS(-DLINUX)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 ENDIF()
 
 IF(WIN32)

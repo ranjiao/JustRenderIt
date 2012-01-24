@@ -72,6 +72,6 @@ namespace JustRenderIt
   klass& klass::InstanceRef(){ return Singleton<klass>::_instanceRef(); };
 #endif
 
-}
+};
 
 #endif /* __SINGLETON_H__ */
