@@ -5,8 +5,11 @@
 
 namespace JustRenderIt
 {
-  template<typename T>
-  class DLL_DECLARE Singleton
+#ifdef CLIENT_SINGLETON
+  template<typename T> class Singleton
+#else
+  template<typename T> class DLL_DECLARE Singleton
+#endif
   {
   private:
     static T* __instance;

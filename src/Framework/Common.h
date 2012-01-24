@@ -64,7 +64,7 @@ typedef std::string STRING;
 #define BUFFER_LENGTH 1024 * 5
 #define BIG_BUFFER_LENGTH 1024 * 1024
 
-#define HashMap std::unordered_map
+#define HashMap std::tr1::unordered_map
 
 namespace JustRenderIt
 {

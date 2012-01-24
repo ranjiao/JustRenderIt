@@ -102,13 +102,12 @@ SET(FrameSources
 SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES})
 
 IF(WIN32)
-  LIST(APPEND FrameLibraries cgD3D9)
   LIST(APPEND FrameLibraries GLUT32)
 ENDIF(WIN32)
 
-IF(LINUX)
+IF(UNIX)
   LIST(APPEND FrameLibraries GLU)
-ENDIF(LINUX)
+ENDIF(UNIX)
 
 ADD_LIBRARY(Framework SHARED ${FrameSources})
 

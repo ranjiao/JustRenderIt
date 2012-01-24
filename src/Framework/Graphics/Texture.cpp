@@ -53,4 +53,6 @@ Texture* Texture::CreateFromFile(STRING filename)
   // Image* img = ImageManager::InstanceRef().LoadFromFile("", filename);
   // assert(img);
   // return CreateFromImage(*img);
+
+  return NULL;
 }

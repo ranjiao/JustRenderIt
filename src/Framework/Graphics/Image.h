@@ -165,7 +165,7 @@ namespace JustRenderIt
     virtual bool SaveToFile(Image* image, STRING filename,
                                         ImageFileFormat fif);
 
-    DECL_SINGLETON_DLL(ImageCodecFreeImage);
+    DECL_SINGLETON(ImageCodecFreeImage);
 
     static FREE_IMAGE_FORMAT GetFreeImageFileFormat(ImageFileFormat iff)
     {

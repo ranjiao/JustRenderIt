@@ -76,6 +76,6 @@ TEST(Resource, Create)
 {
   TestResourceLoader* loader = new TestResourceLoader();
   Handle h1 = loader->LoadFromFile("file1");
-  TestResource* r = g_resourceMgr->GetResource<TestResource>(h1);
+  TestResource* r = (TestResource*)(g_resourceMgr->GetResource(h1));
   EXPECT_TRUE(r != NULL);
 };

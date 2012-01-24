@@ -45,9 +45,7 @@ int main(int argc, char *argv[])        \
     return 0;                                                         \
   }
 #elif defined LINUX
-#if not defined LIBFRAMEWORK_EXPORTS
-#error "Qt is required for linux implementation. Please define USE_GUI_QT."
-#endif
+
 #else
 #error "Unknown OS"
 #endif

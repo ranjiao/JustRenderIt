@@ -23,32 +23,32 @@ float fps = 0;
 #include "UtilLinux.h"
 #endif
 
-void SetSphereRadius ( float r )
-{
-  if ( glRadius == r ) return;
-  glRadius = r;
-
-  // GL sphere
-  if ( glSphere != 65535 ) glDeleteLists ( glSphere, 1 );
-  glSphere = glGenLists ( 1 );
-  float x, y, z, x1, y1, z1;
-  glNewList ( glSphere, GL_COMPILE );
-  glBegin ( GL_TRIANGLE_STRIP );
-  for ( float tilt=-90; tilt <= 90; tilt += 10.0) {
-    for ( float ang=0; ang <= 360; ang += 30.0f) {
-      x = sin ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt ) );
-      y = cos ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt ) );
-      z = sin ( DEGREESTORADIANS( tilt ) ) ;
-      x1 = sin ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt+10.0f ) ) ;
-      y1 = cos ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt+10.0f ) ) ;
-      z1 = sin ( DEGREESTORADIANS( tilt+10.0f ) );
-      glNormal3f ( x, y, z );    glVertex3f ( x*r, y*r, z*r );
-      glNormal3f ( x1, y1, z1 );  glVertex3f ( x1*r, y1*r, z1*r );
-    }
-  }
-  glEnd ();
-  glEndList ();
-}
+//void SetSphereRadius ( float r )
+//{
+//  if ( glRadius == r ) return;
+//  glRadius = r;
+//
+//  // GL sphere
+//  if ( glSphere != 65535 ) glDeleteLists ( glSphere, 1 );
+//  glSphere = glGenLists ( 1 );
+//  float x, y, z, x1, y1, z1;
+//  glNewList ( glSphere, GL_COMPILE );
+//  glBegin ( GL_TRIANGLE_STRIP );
+//  for ( float tilt=-90; tilt <= 90; tilt += 10.0) {
+//    for ( float ang=0; ang <= 360; ang += 30.0f) {
+//      x = sin ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt ) );
+//      y = cos ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt ) );
+//      z = sin ( DEGREESTORADIANS( tilt ) ) ;
+//      x1 = sin ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt+10.0f ) ) ;
+//      y1 = cos ( DEGREESTORADIANS( ang )) * cos ( DEGREESTORADIANS( tilt+10.0f ) ) ;
+//      z1 = sin ( DEGREESTORADIANS( tilt+10.0f ) );
+//      glNormal3f ( x, y, z );    glVertex3f ( x*r, y*r, z*r );
+//      glNormal3f ( x1, y1, z1 );  glVertex3f ( x1*r, y1*r, z1*r );
+//    }
+//  }
+//  glEnd ();
+//  glEndList ();
+//}
 
 // void JustRenderIt::DrawSphere ()
 // {

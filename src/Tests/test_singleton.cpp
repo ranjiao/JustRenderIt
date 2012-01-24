@@ -1,11 +1,12 @@
 #include "gtest/gtest.h"
+#define CLIENT_SINGLETON
 #include "Utils/Singleton.h"
 
 using namespace std;
 using namespace JustRenderIt;
 
 int magic_number = 21294;
-class SingletonTest: public Singleton<SingletonTest>
+class __declspec(dllexport) SingletonTest: public Singleton<SingletonTest>
 {
 public:
   SingletonTest(){};

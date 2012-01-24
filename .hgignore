@@ -4,3 +4,5 @@ build/*
 *.pdb
 *.ilk
 bin/*
+*.exp
+Framework.lib

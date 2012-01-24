@@ -18,6 +18,9 @@ IMPL_SINGLETON(ResourceManager);
 
 ResourceManager* JustRenderIt::g_resourceMgr;
 
+HashHandle    JustRenderIt::g_handleResTable;
+HashFilename  JustRenderIt::g_nameHandleTable;
+
 ResourceManager::ResourceManager()
 {
   g_resourceMgr = this;
@@ -33,15 +36,16 @@ Handle ResourceManager::NewResource(BaseResource* r, char tag)
   assert(r);
 
   STRING filename = r->GetFilename();
-  if(!filename.empty() and m_filenames.find(filename) != m_filenames.end())
+  
+  if(!filename.empty() && g_nameHandleTable.find(filename) != g_nameHandleTable.end())
   {
-    return Handle(m_filenames[filename]);
+    return Handle(g_nameHandleTable[filename]);
   }
 
   Handle h;
   h.Init(r->GetHash(), tag);
-  m_filenames[filename] = h.GetHandle();
-  m_resources[h.GetHandle()] = r;
+  g_nameHandleTable[filename] = h.GetHandle();
+  g_handleResTable[h.GetHandle()] = r;
 
   return h;
 }
@@ -50,4 +54,11 @@ char ResourceManager::RegisterResourceLoader(BaseResourceLoader* loader)
 {
   static char counter = 0;
   return ++counter;
+}
+
+BaseResource* JustRenderIt::ResourceManager::GetResource( Handle h )
+{
+  if(g_handleResTable.find(h) == g_handleResTable.end())
+    return false;
+  return g_handleResTable[h];
 }

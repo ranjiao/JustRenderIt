@@ -87,16 +87,19 @@ namespace JustRenderIt
     virtual char GetHash() = 0;
   };
 
+  typedef HashMap<int, BaseResource*> HashHandle;
+  typedef HashMap<STRING, int> HashFilename;
+  typedef HashHandle::iterator IterResource;
+  typedef HashFilename::iterator IterFilename;
+
+  /* TODO: If these two hash table is put in ResourceManager and exported, 
+  they will cause runtime exception in visual studio. Is there any better
+  way ? */
+  extern HashHandle g_handleResTable;
+  extern HashFilename g_nameHandleTable;
+
   class DLL_DECLARE ResourceManager: public Singleton<ResourceManager>
   {
-  protected:
-    typedef HashMap<int, BaseResource*> HashHandle;
-    typedef HashMap<STRING, int> HashFilename;
-    typedef HashHandle::iterator IterResource;
-
-    HashHandle m_resources;
-    HashFilename m_filenames;
-
   public:
     ResourceManager();
     virtual ~ResourceManager();
@@ -105,14 +108,7 @@ namespace JustRenderIt
 
     char RegisterResourceLoader(BaseResourceLoader* const loader);
 
-    template<typename T>
-    T* GetResource(Handle h)
-    {
-      if(m_resources.find(h) == m_resources.end())
-        return false;
-      BaseResource* r = m_resources[h];
-      return dynamic_cast<T*>(r);
-    };
+    BaseResource* GetResource(Handle h);;
 
     DECL_SINGLETON(ResourceManager);
   };
