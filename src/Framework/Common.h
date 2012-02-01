@@ -36,7 +36,7 @@
 #define DEGREESTORADIANS(degree)  (degree)*PI / 180.0f
 
 #if _MSC_VER >= 1400
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #ifdef LIBFRAMEWORK_EXPORTS
 #define DLL_DECLARE_EXPORT  __declspec( dllexport )
@@ -67,7 +67,7 @@ typedef std::string STRING;
 #define BUFFER_LENGTH 1024 * 5
 #define BIG_BUFFER_LENGTH 1024 * 1024
 
-#define HashMap std::tr1::unordered_map
+#define HashMap std::unordered_map
 
 namespace JustRenderIt
 {

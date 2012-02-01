@@ -82,6 +82,7 @@ namespace JustRenderIt
 
 #ifdef LINUX
 #define NATIVE_TIMER LinuxTimer
+
   /// Linux implementation of timer
   class DLL_DECLARE LinuxTimer: public Timer
   {
@@ -90,7 +91,7 @@ namespace JustRenderIt
     timespec m_crtTime, m_lastTime, m_initTime;
   protected:
     timespec diff(timespec start, timespec end);
-    
+
     virtual void internalCreate();
     virtual void internalDestroy();
   public:
@@ -130,7 +131,7 @@ namespace JustRenderIt
         m_framesAccu = 0;
         m_timesAccu = 0.f;
       }
-      
+
       return m_timeSinceLastUpdate;
     }
 
@@ -141,7 +142,7 @@ namespace JustRenderIt
     };
   };
 
-  class DLL_DECLARE PerfTimer: public NATIVE_TIMER, 
+  class DLL_DECLARE PerfTimer: public NATIVE_TIMER,
     public Singleton<PerfTimer>
   {
   public:

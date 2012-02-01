@@ -6,7 +6,11 @@ using namespace std;
 using namespace JustRenderIt;
 
 int magic_number = 21294;
+#ifdef LINUX
+class SingletonTest: public Singleton<SingletonTest>
+#else
 class __declspec(dllexport) SingletonTest: public Singleton<SingletonTest>
+#endif
 {
 public:
   SingletonTest(){};

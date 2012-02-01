@@ -69,8 +69,8 @@ namespace JustRenderIt
   klass& klass::InstanceRef(){ return Singleton<klass>::_instanceRef(); };
 #elif defined LINUX
 #define IMPL_SINGLETON(klass)                                           \
-  template<class klass> klass* Singleton<klass>::__instance = 0;        \
-  template<class klass> bool Singleton<klass>::__created_by_singleton = false; \
+  template<> klass* Singleton<klass>::__instance = 0;        \
+  template<> bool Singleton<klass>::__created_by_singleton = false; \
   klass* klass::Instance(){ return Singleton<klass>::_instance(); };    \
   klass& klass::InstanceRef(){ return Singleton<klass>::_instanceRef(); };
 #endif
