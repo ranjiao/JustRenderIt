@@ -82,11 +82,11 @@ void JustRenderIt::QtGlWidget::initializeGL()
 
 void JustRenderIt::QtGlWidget::paintGL()
 {
-  //glBegin(GL_TRIANGLES);
-  //glVertex3f( 0.0f, 1.0f, 0.0f);
-  //glVertex3f(-1.0f,-1.0f, 0.0f);
-  //glVertex3f( 1.0f,-1.0f, 0.0f);
-  //glEnd(); 
+  glBegin(GL_TRIANGLES);
+  glVertex3f( 0.0f, 1.0f, 0.0f);
+  glVertex3f(-1.0f,-1.0f, 0.0f);
+  glVertex3f( 1.0f,-1.0f, 0.0f);
+  glEnd(); 
 }
 
 void JustRenderIt::QtGlWidget::resizeGL( int width, int height )

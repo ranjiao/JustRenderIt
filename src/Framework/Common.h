@@ -25,7 +25,8 @@
 #include <unordered_map>
 #include <algorithm>
 
-
+#include "GL/glew.h"
+#define GLM_SWIZZLE
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -35,6 +36,8 @@
 #define DEGREESTORADIANS(degree)  (degree)*PI / 180.0f
 
 #if _MSC_VER >= 1400
+#define WIN32_LEAN_AND_MEAN 
+#include <windows.h>
 #ifdef LIBFRAMEWORK_EXPORTS
 #define DLL_DECLARE_EXPORT  __declspec( dllexport )
 #define DLL_DECLARE         __declspec( dllexport )

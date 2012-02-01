@@ -2,5 +2,18 @@
 
 using namespace JustRenderIt;
 
-IMPL_SINGLETON(Renderer);
+JustRenderIt::Renderer* JustRenderIt::g_renderer;
 
+void JustRenderIt::Renderer::RenderDebugInfo( double timeElapsed )
+{
+//   char debugBuf[BUFFER_LENGTH];
+// 
+//   glm::vec3 cameraPos = g_App->GetCamera()->GetEye();
+//   glm::vec3 centerPos = g_App->GetCamera()->GetCenter();
+//   sprintf(debugBuf, "Camera pos: (%4.2f, %4.2f, %4.2f), looking at: (%4.2f, %4.2f, %4.2f)\n, FPS: %4.2f",
+//     cameraPos.x, cameraPos.y, cameraPos.z, centerPos.x, centerPos.y,
+//     centerPos.z, FrameTimer::InstanceRef().GetFPS());
+// 
+//   this->RenderText(0, 0, debugBuf);
+
+}

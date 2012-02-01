@@ -1,6 +1,7 @@
 #ifndef __QTAPP_H__
 #define __QTAPP_H__
 
+#include "Common.h"
 #include <QGLWidget>
 #include "../AppBase.h"
 

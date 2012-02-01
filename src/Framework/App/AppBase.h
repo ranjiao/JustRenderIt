@@ -68,7 +68,7 @@ namespace JustRenderIt
     virtual void Exit() = 0;
 
     /// Tick function called by Frame once a frame
-    virtual bool Tick(){ return false; };
+    virtual bool Tick();;
 
     /// This routine should be called every frame.
     virtual void Update(double timeElapsed) = 0;
