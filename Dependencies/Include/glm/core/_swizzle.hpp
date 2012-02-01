@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// OpenGL Mathematics (glm.g-truc.net)
 ///
-/// Copyright (c) 2005 - 2011 G-Truc Creation (www.g-truc.net)
+/// Copyright (c) 2005 - 2012 G-Truc Creation (www.g-truc.net)
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
@@ -53,7 +53,7 @@ namespace glm
 namespace glm{
 namespace detail
 {
-    //! Internal class for implementing swizzle operators
+    // Internal class for implementing swizzle operators
     template <typename T, int N>
     struct _swizzle_base0
     {
@@ -92,8 +92,8 @@ namespace detail
         V operator ()()  const { return V(this->elem(E0), this->elem(E1), this->elem(E2), this->elem(E3)); }
     };
 
-    //! Internal class for implementing swizzle operators
-    /*!
+    // Internal class for implementing swizzle operators
+    /*
         Template parameters:
 
         ValueType = type of scalar values (e.g. float, double)
@@ -183,7 +183,7 @@ namespace detail
 		}
     };
 
-	//! Specialization for swizzles containing duplicate elements.  These cannot be modified.
+	// Specialization for swizzles containing duplicate elements.  These cannot be modified.
 	template <typename ValueType, typename VecType, int N, int E0, int E1, int E2, int E3>
 	struct _swizzle_base2<ValueType,VecType,N,E0,E1,E2,E3,1> : public _swizzle_base1<ValueType,VecType,E0,E1,E2,E3,N>
 	{

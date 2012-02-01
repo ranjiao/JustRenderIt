@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// OpenGL Mathematics (glm.g-truc.net)
 ///
-/// Copyright (c) 2005 - 2011 G-Truc Creation (www.g-truc.net)
+/// Copyright (c) 2005 - 2012 G-Truc Creation (www.g-truc.net)
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
@@ -36,7 +36,7 @@
 #define GLM_VERSION_MAJOR			0
 #define GLM_VERSION_MINOR			9
 #define GLM_VERSION_PATCH			3
-#define GLM_VERSION_REVISION		0
+#define GLM_VERSION_REVISION		1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Platform
@@ -44,35 +44,26 @@
 #define GLM_PLATFORM_UNKNOWN		0x00000000
 #define GLM_PLATFORM_WINDOWS		0x00010000
 #define GLM_PLATFORM_LINUX			0x00020000
-#define GLM_PLATFORM_MACOSX			0x00040000
-#define GLM_PLATFORM_IOS			0x00080000
+#define GLM_PLATFORM_APPLE			0x00040000
+//#define GLM_PLATFORM_IOS			0x00080000
 #define GLM_PLATFORM_ANDROID		0x00100000
 #define GLM_PLATFORM_CHROME_NACL	0x00200000
-#define GLM_PLATFORM_UNIX			0x00040000
+#define GLM_PLATFORM_UNIX			0x00400000
 
 #ifdef GLM_FORCE_PLATFORM_UNKNOWN
 #	define GLM_PLATFORM GLM_PLATFORM_UNKNOWN
+#elif defined(__APPLE__)
+#   define GLM_PLATFORM GLM_PLATFORM_APPLE
 #elif defined(_WIN32)
 #	define GLM_PLATFORM GLM_PLATFORM_WINDOWS
-#elif defined(__unix)
-#   if defined(__APPLE__)
-#       include "TargetConditionals.h"
-#       if defined(TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR)
-#           define GLM_PLATFORM GLM_PLATFORM_IOS
-#       elif defined(TARGET_OS_MAC)
-#           define GLM_PLATFORM GLM_PLATFORM_MACOSX
-#       else
-#           define GLM_PLATFORM GLM_PLATFORM_UNKNOWN
-#       endif
-#   elif defined(ANDROID)
-#	define GLM_PLATFORM GLM_PLATFORM_ANDROID
-#   elif defined(__linux)
-#	define GLM_PLATFORM GLM_PLATFORM_LINUX
-#   else
-#	define GLM_PLATFORM GLM_PLATFORM_UNIX
-#   endif
 #elif defined(__native_client__)
 #	define GLM_PLATFORM GLM_PLATFORM_CHROME_NACL
+#elif defined(ANDROID)
+#   define GLM_PLATFORM GLM_PLATFORM_ANDROID
+#elif defined(__linux)
+#   define GLM_PLATFORM GLM_PLATFORM_LINUX
+#elif defined(__unix)
+#   define GLM_PLATFORM GLM_PLATFORM_UNIX
 #else
 #	define GLM_PLATFORM GLM_PLATFORM_UNKNOWN
 #endif//
@@ -82,10 +73,10 @@
 #	define GLM_MESSAGE_PLATFORM_DISPLAYED
 #	if(GLM_PLATFORM & GLM_PLATFORM_WINDOWS)
 #		pragma message("GLM: Windows platform detected")
-#	elif(GLM_PLATFORM & GLM_PLATFORM_IOS)
-#		pragma message("GLM: iOS platform detected")
-#	elif(GLM_PLATFORM & GLM_PLATFORM_MACOSX)
-#		pragma message("GLM: MacOSX platform detected")
+//#	elif(GLM_PLATFORM & GLM_PLATFORM_IOS)
+//#		pragma message("GLM: iOS platform detected")
+#	elif(GLM_PLATFORM & GLM_PLATFORM_APPLE)
+#		pragma message("GLM: Apple platform detected")
 #	elif(GLM_PLATFORM & GLM_PLATFORM_LINUX)
 #		pragma message("GLM: Linux platform detected")
 #	elif(GLM_PLATFORM & GLM_PLATFORM_UNIX)
@@ -293,7 +284,7 @@
 #   endif
 
 // G++ 
-#elif defined(__GNUC__)// || defined(__llvm__) || defined(__clang__)
+#elif(defined(__GNUC__) || defined(__MINGW32__))// || defined(__llvm__) || defined(__clang__)
 #   if defined (__llvm__)
 #       define GLM_COMPILER_GCC_EXTRA GLM_COMPILER_GCC_LLVM
 #   elif defined (__clang__)
@@ -393,18 +384,10 @@
 /////////////////
 // Build model //
 
-#if(GLM_COMPILER & GLM_COMPILER_VC)
-#	if defined(_M_X64)
+#if((defined(__WORDSIZE) && (__WORDSIZE == 64)) || defined(__arch64__) || defined(__LP64__) || defined(_M_X64) || defined(__ppc64__) || defined(__x86_64__))
 #		define GLM_MODEL	GLM_MODEL_64
-#	else
-#		define GLM_MODEL	GLM_MODEL_32
-#	endif//_M_X64
-#elif(GLM_COMPILER & GLM_COMPILER_GCC)
-#	if(defined(__WORDSIZE) && (__WORDSIZE == 64)) || defined(__arch64__) || defined(__LP64__) || defined(__x86_64__)
-#		define GLM_MODEL	GLM_MODEL_64
-#	else
-#		define GLM_MODEL	GLM_MODEL_32
-#	endif//
+#elif(defined(__i386__) || defined(__ppc__))
+#	define GLM_MODEL	GLM_MODEL_32
 #else
 #	define GLM_MODEL	GLM_MODEL_32
 #endif//
@@ -431,7 +414,7 @@
 #define GLM_LANG_CXX98			((1 << 1) | GLM_LANG_CXX)
 #define GLM_LANG_CXX03			((1 << 2) | GLM_LANG_CXX98)
 #define GLM_LANG_CXX0X			((1 << 3) | GLM_LANG_CXX03)
-#define GLM_LANG_CXX11			((1 << 4) | GLM_LANG_CXX11)
+#define GLM_LANG_CXX11			((1 << 4) | GLM_LANG_CXX0X)
 #define GLM_LANG_CXXMS			(1 << 5)
 #define GLM_LANG_CXXGNU			(1 << 6)
 
@@ -442,9 +425,8 @@
 #elif(defined(GLM_FORCE_CXX98))
 #	define GLM_LANG GLM_LANG_CXX98
 #else
-#	if(((GLM_COMPILER & GLM_COMPILER_GCC) == GLM_COMPILER_GCC) && defined(__STRICT_ANSI__))
-#		define GLM_LANG GLM_LANG_CXX98
-#	elif(((GLM_COMPILER & GLM_COMPILER_GCC) == GLM_COMPILER_GCC) && defined(__GXX_EXPERIMENTAL_CXX0X__)) // -std=c++0x or -std=gnu++0x
+//  -std=c++0x or -std=gnu++0x
+#	if(((GLM_COMPILER & GLM_COMPILER_GCC) == GLM_COMPILER_GCC) && defined(__GXX_EXPERIMENTAL_CXX0X__)) 
 #		define GLM_LANG GLM_LANG_CXX0X
 #	elif(((GLM_COMPILER & GLM_COMPILER_VC) == GLM_COMPILER_VC) && defined(_MSC_EXTENSIONS))
 #		define GLM_LANG GLM_LANG_CXXMS
@@ -454,6 +436,10 @@
 #		else
 #			define GLM_LANG GLM_LANG_CXX98
 #		endif//(GLM_COMPILER == GLM_COMPILER_VC2010)
+#	elif((GLM_COMPILER & GLM_COMPILER_GCC) == GLM_COMPILER_GCC) //&& defined(__STRICT_ANSI__))
+#		define GLM_LANG GLM_LANG_CXX98
+#	elif((GLM_COMPILER & GLM_COMPILER_CLANG) == GLM_COMPILER_CLANG) 
+#		define GLM_LANG GLM_LANG_CXX98
 #	else
 #		define GLM_LANG GLM_LANG_CXX
 #	endif
@@ -473,6 +459,8 @@
 #		pragma message("GLM: C++ with GNU language extensions")
 #	elif(GLM_LANG == GLM_LANG_CXXMS)
 #		pragma message("GLM: C++ with VC language extensions")
+#   else
+#       pragma message("GLM: C++ language undetected")
 #	endif//GLM_MODEL
 #endif//GLM_MESSAGE
 
@@ -551,11 +539,11 @@
 #	if(GLM_ARCH == GLM_ARCH_PURE)
 #		pragma message("GLM: Platform independent")
 #	elif(GLM_ARCH == GLM_ARCH_SSE2)
-#		pragma message("GLM: SSE2 build platform")
+#		pragma message("GLM: SSE2 instruction set")
 #	elif(GLM_ARCH == GLM_ARCH_SSE3)
-#		pragma message("GLM: SSE3 build platform")
+#		pragma message("GLM: SSE3 instruction set")
 #	elif(GLM_ARCH == GLM_ARCH_AVX)
-#		pragma message("GLM: AVX build platform")
+#		pragma message("GLM: AVX instruction set")
 #	endif//GLM_ARCH
 #endif//GLM_MESSAGE
 
