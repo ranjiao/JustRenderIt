@@ -68,6 +68,14 @@ namespace JustRenderIt
     Renderer(){};
     virtual ~Renderer(){};
 
+    typedef enum
+    {
+      OPENGL,
+      DX9,
+      DX10,
+      DX11,
+    } GRAPHIC_API_TYPE;
+    virtual GRAPHIC_API_TYPE GetRendererType() = 0;
     virtual bool InitAPI(bool VSync = false) = 0;
     virtual void ExitAPI() = 0;
 
@@ -80,6 +88,9 @@ namespace JustRenderIt
     virtual void RenderText(int x, int y, const char *string, ...) = 0;
     virtual void Flush() = 0;
     virtual void Finish() = 0;
+
+    /// return true if everything is ok
+    virtual bool CheckError() = 0;
   };
 
   extern DLL_DECLARE Renderer* g_renderer;

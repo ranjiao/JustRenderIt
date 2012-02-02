@@ -86,17 +86,42 @@ namespace JustRenderIt
   The sub-class should be responsible to take care of the
   status of m_isOK.
   **/
-  class DLL_DECLARE IObject
+  class DLL_DECLARE BaseObject
   {
   protected:
     bool m_isOK;
+
+    virtual void Create() 
+    {
+      assert(!m_isOK);
+      internalCreate();
+    }
+
+    virtual void Destroy()
+    {
+      assert(m_isOK);
+      internalDestroy();
+    }
+
   protected:
     /// actually do the initialization and update m_isOK.
     virtual void internalCreate() = 0;
 
     /// actually do the destroy and update m_isOK
     virtual void internalDestroy() = 0;
+
   public:
+    BaseObject()
+    {
+      m_isOK = true;
+    }
+
+    virtual ~BaseObject()
+    {
+      if(m_isOK)
+        internalDestroy();
+    }
+
     /// Return whether this object is properly initialized or not
     virtual bool IsOK(){ return m_isOK; };
   };

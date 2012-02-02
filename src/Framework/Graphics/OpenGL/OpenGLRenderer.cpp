@@ -60,5 +60,5 @@ void JustRenderIt::OpenGLRenderer::Finish()
 
 bool JustRenderIt::OpenGLRenderer::CheckError()
 {
-  return false;
+  return true;
 }

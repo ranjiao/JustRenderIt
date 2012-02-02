@@ -65,7 +65,7 @@ namespace JustRenderIt
 
   /** Base class which  of the resource
    **/
-  class DLL_DECLARE BaseResource
+  class DLL_DECLARE BaseResource: public BaseObject
   {
   protected:
     bool m_dirty;

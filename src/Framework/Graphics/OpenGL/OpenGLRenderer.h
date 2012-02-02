@@ -12,6 +12,10 @@ namespace JustRenderIt
     OpenGLRenderer();;
     virtual ~OpenGLRenderer();;
 
+    virtual GRAPHIC_API_TYPE GetRendererType()
+    {
+      return Renderer::OPENGL;
+    };
     virtual bool InitAPI(bool VSync = false);
     virtual void ExitAPI();
 

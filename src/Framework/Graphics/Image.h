@@ -124,6 +124,40 @@ namespace JustRenderIt
     STRING     GetFilename(){ return m_filename; };
     PixelFormat  GetPixelFormat(){ return m_format; };
     unsigned   GetSize(){ return m_size; };
+
+    static int GetComponentCount(PixelFormat pf)
+    {
+      switch(pf)
+      {
+      case PIXEL_L8:
+        return 1;
+      case PIXEL_R5G6B5:
+        return 3;
+      case PIXEL_A1R5G5B5:
+        return 4;
+      case PIXEL_R8G8B8:
+      case PIXEL_B8G8R8:
+        return 3;
+      case PIXEL_R8G8B8A8:
+      case PIXEL_B8G8R8A8:
+        return 4;
+
+      case PIXEL_RGB16:
+        return 3;
+      case PIXEL_RGBA16:
+        return 4;
+      case PIXEL_F32:
+      case PIXEL_F64:
+        return 1;
+      case PIXEL_RGBF32:
+        return 4;
+      case PIXEL_RGBAF32:
+        return 4;
+      default:
+        assert(false);
+        return 1;
+      }
+    }
   };
 
   class DLL_DECLARE ImageCodec

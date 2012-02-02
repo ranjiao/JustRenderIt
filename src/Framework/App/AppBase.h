@@ -126,7 +126,7 @@ namespace JustRenderIt
   /** Base class for an rendering window. It could be an widget embedded
   in another window, or a standalone window.
   **/
-  class DLL_DECLARE FrameBase: public IObject
+  class DLL_DECLARE FrameBase: public BaseObject
   {
   protected:
     glm::vec2 m_pos, m_size;

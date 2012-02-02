@@ -33,9 +33,6 @@ FILE(GLOB_RECURSE ENTITY_SRC "Entity/*.cpp")
 FILE(GLOB GRAPHICS_HEADER "Graphics/*.h")
 FILE(GLOB GRAPHICS_SRC "Graphics/*.cpp")
 
-FILE(GLOB OPENGL_HEADER "Graphics/OpenGL/*.h")
-FILE(GLOB OPENGL_SRC "Graphics/OpenGL/*.cpp")
-
 FILE(GLOB_RECURSE OPENGL_HEADER ${PROJECT_SOURCE_DIR} "Graphics/OpenGL/*.h")
 FILE(GLOB_RECURSE OPENGL_SRC ${PROJECT_SOURCE_DIR} "Graphics/OpenGL/*.cpp")
 FILE(GLOB_RECURSE OPENGL_C_SRC ${PROJECT_SOURCE_DIR} "Graphics/OpenGL/*.c")
@@ -102,7 +99,7 @@ SET(FrameSources
   ${ENTITY_SRC} ${ENTITY_HEADER})
 
 # Setup libraries to link
-SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES})
+SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES} GLU32)
 
 IF(WIN32)
   LIST(APPEND FrameLibraries opengl32)

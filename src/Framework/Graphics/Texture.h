@@ -6,7 +6,7 @@
 
 namespace JustRenderIt
 {
-  class DLL_DECLARE Texture: public IObject
+  class DLL_DECLARE Texture: public BaseObject
   {
   public:
     enum TexParam_t

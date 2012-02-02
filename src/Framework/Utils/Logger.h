@@ -19,7 +19,7 @@ namespace JustRenderIt
   };
 
   /// Handle the log IO.
-  class LogPolicy: public IObject
+  class LogPolicy: public BaseObject
   {
   public:
     virtual void Create(STRING filename) = 0;
@@ -30,7 +30,7 @@ namespace JustRenderIt
   };
 
   class DLL_DECLARE Logger: public Singleton<Logger>,
-                            public IObject
+                            public BaseObject
   {
   protected:
     typedef std::vector<LogPolicy*> VecPolicy;
@@ -114,7 +114,7 @@ namespace JustRenderIt
   public:
     LoggerHtml();
 
-    virtual void Create(STRING filename);
+    virtual void Create(STRING filename = "");
     virtual void Destroy();
 
     virtual void Write(STRING content, LogLevel level);
