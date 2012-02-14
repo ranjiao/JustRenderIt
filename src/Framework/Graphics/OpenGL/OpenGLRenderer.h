@@ -2,10 +2,12 @@
 #define __OpenGLRenderer_h__
 
 #include "Graphics/Renderer.h"
+#include "Utils/Singleton.h"
 
 namespace JustRenderIt
 {
-  class DLL_DECLARE OpenGLRenderer: public Renderer
+  class DLL_DECLARE OpenGLRenderer: public Renderer, 
+    public Singleton<OpenGLRenderer>
   {
   protected:
   public:
@@ -28,7 +30,11 @@ namespace JustRenderIt
     virtual void Flush();
     virtual void Finish();
 
+    virtual void SetCamera(Camera* c);
+
     virtual bool CheckError();
+
+    DECL_SINGLETON(OpenGLRenderer);
   };
 
   extern DLL_DECLARE OpenGLRenderer* g_glRenderer;

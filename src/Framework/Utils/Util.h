@@ -14,9 +14,8 @@ namespace JustRenderIt
   const size_t BUFFER_SIZE = 1024 * 2;
 
   // DLL_DECLARE void DrawSphere ();
-  // DLL_DECLARE void DrawGrid(Color c = WHITE, float width = 20,
-  //                           float height = 20,
-  //   int xSeg = 10, int zSeg = 10);
+   DLL_DECLARE void DrawGrid(float width = 20, float height = 20,
+                             int xSeg = 10, int zSeg = 10);
   // DLL_DECLARE void DrawCube(float width = 1.f, float height = 1.f,
   //   float depth = 1.f);
   // DLL_DECLARE void DrawScreenAlignedBox();

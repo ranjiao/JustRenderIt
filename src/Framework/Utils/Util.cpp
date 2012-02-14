@@ -56,34 +56,32 @@ float fps = 0;
 //   glCallList ( glSphere );
 // }
 
-// void JustRenderIt::DrawGrid(Color c, float width, float height, int xSeg, int zSeg)
-// {
-//   g_renderer->SetColor(c);
-//   glBindTexture(GL_TEXTURE_2D, 0);
-//   glDisable(GL_TEXTURE_2D);
-//   glDisable(GL_LIGHTING);
+ void JustRenderIt::DrawGrid(float width, float height, int xSeg, int zSeg)
+ {
+   glBindTexture(GL_TEXTURE_2D, 0);
+   glDisable(GL_TEXTURE_2D);
+   glDisable(GL_LIGHTING);
 
-//   float dx = width / (float)xSeg;
-//   float dz = height / (float)zSeg;
+   float dx = width / (float)xSeg;
+   float dz = height / (float)zSeg;
 
-//   float startX = - width / 2.0f;
-//   float startZ = - height / 2.0f;
-//   glBegin ( GL_LINES );
-//   for(int i=0; i<=xSeg; i++)
-//   {
-//     glVertex3f(startX + i*dx, 0, startZ);
-//     glVertex3f(startX + i*dx, 0, -startZ);
-//   }
-//   for(int i=0; i<=zSeg; i++)
-//   {
-//     glVertex3f(startX, 0, startZ + i*dz);
-//       glVertex3f(-startX, 0,startZ + i*dz);
-//   }
-//   glEnd ();
+   float startX = - width / 2.0f;
+   float startZ = - height / 2.0f;
+   glBegin ( GL_LINES );
+   for(int i=0; i<=xSeg; i++)
+   {
+     glVertex3f(startX + i*dx, 0, startZ);
+     glVertex3f(startX + i*dx, 0, -startZ);
+   }
+   for(int i=0; i<=zSeg; i++)
+   {
+     glVertex3f(startX, 0, startZ + i*dz);
+       glVertex3f(-startX, 0,startZ + i*dz);
+   }
+   glEnd ();
 
-//   g_renderer->SetColor(WHITE);
-//   glEnable(GL_TEXTURE_2D);
-// }
+   glEnable(GL_TEXTURE_2D);
+ }
 
 // void JustRenderIt::DrawCube(float width /* = 1.f */, float height /* = 1.f */,
 //                         float depth /* = 1.f */)
@@ -172,7 +170,7 @@ unsigned JustRenderIt::FileLength(STRING filename)
     fclose(file);
   }
   else
-    throw new JRIException("File does not exists while trying to get its length");
+    throw new Exception("File does not exists while trying to get its length");
 
   return length;
 }

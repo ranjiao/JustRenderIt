@@ -36,7 +36,7 @@ namespace JustRenderIt
     {
       #if defined _WIN32
       if(!m_isOK)
-        throw JRIException("Timer is not initialized yet while "
+        throw Exception("Timer is not initialized yet while "
                               "trying to get time.");
       return m_timeSinceLastUpdate;
       #else
@@ -49,7 +49,7 @@ namespace JustRenderIt
     {
       #if defined _WIN32
       if(!m_isOK)
-        throw JRIException("Timer is not initialized yet while "
+        throw Exception("Timer is not initialized yet while "
                               "trying to get time.");
       return m_timeSinceInit;
       #else

@@ -30,7 +30,7 @@ TEST(Singleton, Create)
 {
   EXPECT_EQ(SingletonTest::InstanceRef().TestFunc(), magic_number);
 
-  EXPECT_THROW(new SingletonTest(), JRIException);
+  EXPECT_THROW(new SingletonTest(), Exception);
 
   SingletonTest* p = SingletonTest::Instance();
   SAFE_DELETE(p);

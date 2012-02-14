@@ -115,6 +115,9 @@ void Camera::Update()
   int dx = m_crtX - m_lastX;
   int dy = m_crtY - m_lastY;
 
+  if(dx != 0 || dy != 0)
+    int debug = 1;
+
   m_lastX = m_crtX;
   m_lastY = m_crtY;
 
@@ -180,15 +183,6 @@ glm::mat4 Camera::GetMatrixModelView()
 {
   m_worldView = glm::lookAt(m_eye, m_center, m_up);
   return m_worldView;
-}
-
-void OpenGLCamera::Look()
-{
-  glViewport(0, 0, (GLsizei)m_viewportSize.x, (GLsizei)m_viewportSize.y);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf(glm::value_ptr(GetMatrixModelView()));
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf(glm::value_ptr(GetMatrixProjection()));
 }
 
 glm::mat4 JustRenderIt::Camera::GetMatrixViewModelProjection()

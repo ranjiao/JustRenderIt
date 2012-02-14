@@ -12,6 +12,8 @@ class HelloWorld: public NATIVE_APP
 public:
   HelloWorld();
   ~HelloWorld();
+
+  virtual void Render(double timeElapsed);
 };
 
 #endif /* __HELLOWORLD_H__ */

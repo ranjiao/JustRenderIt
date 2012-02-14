@@ -99,10 +99,10 @@ SET(FrameSources
   ${ENTITY_SRC} ${ENTITY_HEADER})
 
 # Setup libraries to link
-SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES} GLU32)
+SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES})
 
 IF(WIN32)
-  LIST(APPEND FrameLibraries opengl32)
+  LIST(APPEND FrameLibraries opengl32 GLU32)
 ENDIF(WIN32)
 
 IF(UNIX)

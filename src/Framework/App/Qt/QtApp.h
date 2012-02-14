@@ -46,9 +46,16 @@ namespace JustRenderIt
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
   protected:
+    // Qt drawing functions
 	  void initializeGL();
 	  void paintGL();
 	  void resizeGL(int width, int height);
+
+
+    // Qt event functions
+    virtual void	mouseMoveEvent ( QMouseEvent * event );
+    virtual void	mousePressEvent ( QMouseEvent * event );
+    virtual void	mouseReleaseEvent ( QMouseEvent * event );
   protected:
     QTimer *m_timer;
   signals:

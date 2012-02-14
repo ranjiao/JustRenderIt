@@ -17,7 +17,7 @@ JustRenderIt::QtApp::~QtApp(void)
 
 void JustRenderIt::QtApp::Update( double timeElapsed )
 {
-
+  AppBase::Update(timeElapsed);
 }
 
 
@@ -63,6 +63,8 @@ QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
   m_timer = new QTimer(this);
   connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()) );
   m_timer->start(10);
+
+  setMouseTracking(true);
 }
 
 JustRenderIt::QtGlWidget::~QtGlWidget()
@@ -82,11 +84,7 @@ void JustRenderIt::QtGlWidget::initializeGL()
 
 void JustRenderIt::QtGlWidget::paintGL()
 {
-  glBegin(GL_TRIANGLES);
-  glVertex3f( 0.0f, 1.0f, 0.0f);
-  glVertex3f(-1.0f,-1.0f, 0.0f);
-  glVertex3f( 1.0f,-1.0f, 0.0f);
-  glEnd(); 
+  g_app->Tick();
 }
 
 void JustRenderIt::QtGlWidget::resizeGL( int width, int height )
@@ -102,4 +100,47 @@ QSize JustRenderIt::QtGlWidget::minimumSizeHint() const
 QSize JustRenderIt::QtGlWidget::sizeHint() const
 {
   return QSize(400, 400);
+}
+
+void JustRenderIt::QtGlWidget::mouseMoveEvent( QMouseEvent * event )
+{
+  static int last_x = 0, last_y = 0;
+
+  g_qtApp->OnMouseMove(event->x(), event->y(), last_x, last_y);
+
+  last_x = event->x();
+  last_y = event->y();
+}
+
+JustRenderIt::MouseButton MouseButtonConvert(Qt::MouseButton in_btn)
+{
+  JustRenderIt::MouseButton btn;
+  switch(in_btn)
+  {
+  case Qt::NoButton:
+    return JustRenderIt::MOUSE_NONE;
+  case Qt::LeftButton:
+    btn = JustRenderIt::MOUSE_LEFT;
+    break;
+  case Qt::MidButton:
+    btn = JustRenderIt::MOUSE_MIDDLE;
+    break;
+  case Qt::RightButton:
+    btn = JustRenderIt::MOUSE_RIGHT;
+    break;
+  }
+  return btn;
+}
+
+void JustRenderIt::QtGlWidget::mousePressEvent( QMouseEvent * event )
+{
+  
+  g_qtApp->OnMouseButton(event->x(), event->y(), 
+    MouseButtonConvert(event->button()), true);
+}
+
+void JustRenderIt::QtGlWidget::mouseReleaseEvent( QMouseEvent * event )
+{
+  g_qtApp->OnMouseButton(event->x(), event->y(), 
+    MouseButtonConvert(event->button()), false);
 }

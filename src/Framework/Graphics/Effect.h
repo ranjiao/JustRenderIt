@@ -12,7 +12,7 @@ namespace JustRenderIt
 {
   class Texture;
 
-  class DLL_DECLARE Effect
+  class DLL_DECLARE Effect: public BaseObject
   {
   public:
     Effect(STRING filename){ m_filename = filename; };

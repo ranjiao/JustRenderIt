@@ -1,0 +1,9 @@
+[patterns]
+**.c = native
+**.cpp = native
+**.h = native
+**.hpp = native
+**.txt = LF
+
+[repository]
+native = LF

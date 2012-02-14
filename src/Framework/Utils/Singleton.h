@@ -18,7 +18,7 @@ namespace JustRenderIt
     Singleton()
     {
       if( !__created_by_singleton )
-        throw JRIException("Singleton can only be created once");
+        throw Exception("Singleton can only be created once");
     };
 
     virtual ~Singleton()

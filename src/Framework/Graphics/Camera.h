@@ -2,20 +2,10 @@
 #define __CAMERA_H__
 
 #include "Common.h"
+#include "App/AppBase.h"
 
 namespace JustRenderIt
 {
-
-  enum MouseButton
-  {
-    MOUSE_LEFT = 0,
-    MOUSE_MIDDLE,
-    MOUSE_RIGHT,
-    MOUSE_NONE,
-
-    MOUSE_BUTTON_COUNT,
-  };
-
   /** Camera base class. How to control:<br>
       <strong>RB</strong>: rotate,<br>
       <strong>MB</strong>: slide,<br>
@@ -31,7 +21,6 @@ namespace JustRenderIt
     void Rotate(float yaw, float pitch, float roll);
     void MoveTo(float x, float y, float z);
     void MoveBy(float x, float y, float z);
-    virtual void Look() = 0;
 
     /// Callback function for mouse movement event.
     bool OnMouseMove(const int x, const int y);
@@ -90,13 +79,6 @@ namespace JustRenderIt
     float m_rotateSpeed, m_translateSpeed;
   protected:
     void UpdateViewDirections();
-  };
-
-  /// Specialized camera for OpenGL.
-  class DLL_DECLARE OpenGLCamera: public Camera
-  {
-  public:
-    virtual void Look();
   };
 
 }

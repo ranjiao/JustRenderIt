@@ -72,13 +72,13 @@ typedef std::string STRING;
 namespace JustRenderIt
 {
   /// Exception class used by all classes in myFramework
-  class JRIException
+  class Exception
   {
   protected:
     STRING m_msg;
   public:
-    JRIException(STRING msg){ m_msg = msg; };
-    virtual ~JRIException(){}
+    Exception(STRING msg){ m_msg = msg; };
+    virtual ~Exception(){}
     STRING GetMessage(){ return m_msg; };
   };
 
@@ -105,10 +105,10 @@ namespace JustRenderIt
 
   protected:
     /// actually do the initialization and update m_isOK.
-    virtual void internalCreate() = 0;
+    virtual void internalCreate(){};
 
     /// actually do the destroy and update m_isOK
-    virtual void internalDestroy() = 0;
+    virtual void internalDestroy(){};
 
   public:
     BaseObject()

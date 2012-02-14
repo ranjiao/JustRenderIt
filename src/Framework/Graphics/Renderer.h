@@ -62,6 +62,8 @@ namespace JustRenderIt
   static const Color BLUE  = Color(0.f, 0.f, 1.f, 1.0f);
   static const Color SOFT_BLUE = Color(135/255.f, 135/255.f, 233/255.f, 1.f);
 
+  class Camera;
+
   class DLL_DECLARE Renderer
   {
   public:
@@ -88,6 +90,8 @@ namespace JustRenderIt
     virtual void RenderText(int x, int y, const char *string, ...) = 0;
     virtual void Flush() = 0;
     virtual void Finish() = 0;
+
+    virtual void SetCamera(Camera* c) = 0;
 
     /// return true if everything is ok
     virtual bool CheckError() = 0;

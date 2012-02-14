@@ -49,7 +49,7 @@ Image* ImageCodecFreeImage::LoadFromFile(STRING filename)
   FIBITMAP* fiBitmap = FreeImage_Load(fif, filename.c_str());
   if( !fiBitmap )
   {
-    throw new JRIException("Error while loading image.");
+    throw new Exception("Error while loading image.");
   }
 
   imgData = new Image();
@@ -137,7 +137,7 @@ Image* ImageCodecFreeImage::LoadFromFile(STRING filename)
     };
     break;
   default:
-    throw new JRIException("Unsupported image format.");
+    throw new Exception("Unsupported image format.");
     break;
   }
 
