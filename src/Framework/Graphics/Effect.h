@@ -15,8 +15,8 @@ namespace JustRenderIt
   class DLL_DECLARE Effect: public BaseObject
   {
   public:
-    Effect(STRING filename){ m_filename = filename; };
-    Effect(){ m_filename = EMPTY_STRING; };
+    Effect(STRING filename);
+    Effect();
 
     virtual void Create(STRING filename = EMPTY_STRING);
     virtual void Destroy();

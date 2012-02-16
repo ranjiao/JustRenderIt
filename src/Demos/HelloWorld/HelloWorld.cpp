@@ -2,6 +2,9 @@
 #include "Utils/Util.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/Pipeline.h"
+#include "Graphics/Effect.h"
+
+using namespace JustRenderIt;
 
 APP_MAIN_IMPLEMENTATION(HelloWorld)
 
@@ -22,3 +25,9 @@ void HelloWorld::Render(double timeElapsed)
   DrawGrid();
 }
 
+void HelloWorld::InitApp()
+{
+  AppBase::InitApp();
+
+  m_effect = new CGEffect("illum.cgfx");
+}

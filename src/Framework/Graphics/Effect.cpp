@@ -5,10 +5,22 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/OpenGL/OpenGLTexture.h"
 #include "Cg/cgGL.h"
+#include "../Resource.h"
 
 using namespace JustRenderIt;
 
 static CGcontext s_cgContext = NULL;
+
+Effect::Effect(STRING filename)
+{
+  m_filename = filename;
+  Create(filename);
+}
+
+Effect::Effect()
+{
+  m_filename = EMPTY_STRING;
+}
 
 CGcontext CGEffect::GetCGContext()
 {
@@ -108,7 +120,7 @@ void JustRenderIt::CGEffect::internalCreate()
   assert(!m_filename.empty());
 
   STRING filename = m_filename;
-  if(!SearchResource(filename, "Shaders"))
+  if(!ResourceManager::GetResourcePath(filename, "Shaders"))
   {
     m_isOK = false;
     return;

@@ -17,7 +17,8 @@ namespace JustRenderIt
     Camera(void);
     ~Camera(void);
 
-    void LookAt(glm::vec3 pos, glm::vec3 target, glm::vec3 up = glm::vec3(0,1,0));
+    void LookAt(glm::vec3 pos, glm::vec3 target,
+                glm::vec3 up = glm::vec3(0,1,0));
     void Rotate(float yaw, float pitch, float roll);
     void MoveTo(float x, float y, float z);
     void MoveBy(float x, float y, float z);
@@ -25,7 +26,8 @@ namespace JustRenderIt
     /// Callback function for mouse movement event.
     bool OnMouseMove(const int x, const int y);
     /// Callback function for mouse click event.
-    bool OnMouseClick(const int x, const int y, const MouseButton button, const bool pressed);
+    bool OnMouseClick(const int x, const int y,
+                      const MouseButton button, const bool pressed);
     /// Should be called before every frame get rendered.
     void Update();
     /// Set how fast the camera rotate.
@@ -74,7 +76,7 @@ namespace JustRenderIt
     bool    m_buttonPressed[MOUSE_BUTTON_COUNT];
 
     int m_crtX, m_crtY;
-    int m_lastX, m_lastY; 
+    int m_lastX, m_lastY;
 
     float m_rotateSpeed, m_translateSpeed;
   protected:

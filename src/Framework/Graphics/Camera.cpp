@@ -26,7 +26,6 @@ Camera::~Camera(void)
 
 }
 
-/// ���㵱ǰ�ӵ�����ϵ�µ���������
 void Camera::UpdateViewDirections()
 {
   m_viewForward = m_center - m_eye;
@@ -80,7 +79,8 @@ void Camera::MoveBy(float x, float y, float z)
   glm::vec3 m_viewRight = glm::cross(m_up, m_viewForward );
   m_viewRight = glm::normalize(m_viewRight);
 
-  glm::vec3 moveXYZ = m_viewForward * z + m_viewRight * x + glm::vec3( 0, y, 0 );
+  glm::vec3 moveXYZ = m_viewForward * z + m_viewRight * x
+    + glm::vec3( 0, y, 0 );
   m_eye += moveXYZ;
   m_center += moveXYZ;
   m_up += glm::vec3( 0, y, 0 );
@@ -93,7 +93,8 @@ bool Camera::OnMouseMove(const int x, const int y)
   return true;
 }
 
-bool Camera::OnMouseClick(const int x, const int y, const MouseButton button, const bool pressed)
+bool Camera::OnMouseClick(const int x, const int y,
+                          const MouseButton button, const bool pressed)
 {
   m_crtX = x;
   m_crtY = y;
@@ -114,9 +115,6 @@ void Camera::Update()
 {
   int dx = m_crtX - m_lastX;
   int dy = m_crtY - m_lastY;
-
-  if(dx != 0 || dy != 0)
-    int debug = 1;
 
   m_lastX = m_crtX;
   m_lastY = m_crtY;
@@ -174,7 +172,8 @@ void Camera::Reset()
 
 glm::mat4 Camera::GetMatrixProjection()
 {
-  m_projection = glm::perspective<float>(m_fov, m_viewportSize.x/m_viewportSize.y,
+  m_projection = glm::perspective<float>(
+    m_fov, m_viewportSize.x/m_viewportSize.y,
     m_near, m_far);
   return m_projection;
 }

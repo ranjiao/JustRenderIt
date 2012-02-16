@@ -1,4 +1,6 @@
 #include "Resource.h"
+#include "Utils/Util.h"
+#include "Utils/Logger.h"
 
 using namespace JustRenderIt;
 
@@ -36,8 +38,9 @@ Handle ResourceManager::NewResource(BaseResource* r, char tag)
   assert(r);
 
   STRING filename = r->GetFilename();
-  
-  if(!filename.empty() && g_nameHandleTable.find(filename) != g_nameHandleTable.end())
+
+  if(!filename.empty() &&
+     g_nameHandleTable.find(filename) != g_nameHandleTable.end())
   {
     return Handle(g_nameHandleTable[filename]);
   }
@@ -61,4 +64,31 @@ BaseResource* JustRenderIt::ResourceManager::GetResource( Handle h )
   if(g_handleResTable.find(h) == g_handleResTable.end())
     return false;
   return g_handleResTable[h];
+}
+
+bool JustRenderIt::ResourceManager::GetResourcePath(STRING& filename,
+                                                    STRING folderName)
+{
+  Trim(filename);
+  Trim(folderName);
+  if(folderName[folderName.length()-1] == '/' ||
+     folderName[folderName.length()-1] == '\\' )
+    folderName = folderName.substr(0, folderName.length()-1);
+  if(folderName[0] == '/')
+    folderName = folderName.substr(1, folderName.length()-1);
+
+  if(!FileExists(filename))
+  {
+    STRING newfilename = "../resources/";
+    newfilename += folderName + "/" + filename;
+    if(!FileExists(newfilename))
+    {
+      char str[256];
+      sprintf(str, "Couldn't open \"%s\"", filename.c_str());
+      LOG_ERROR1(str);
+      return false;
+    }
+    filename = newfilename;
+  }
+  return true;
 }

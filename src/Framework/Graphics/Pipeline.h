@@ -6,6 +6,7 @@
 namespace JustRenderIt
 {
   class Camera;
+  class Effect;
 
   /// Context of a rendering pipeline
   class Pipeline
@@ -17,6 +18,7 @@ namespace JustRenderIt
     virtual void Render(double timeElapsed);
 
     Camera* m_camera;
+    Effect* m_effect;
   };
 
   DLL_DECLARE extern Pipeline* g_pipeline;

@@ -92,7 +92,7 @@ namespace JustRenderIt
   typedef HashHandle::iterator IterResource;
   typedef HashFilename::iterator IterFilename;
 
-  /* TODO: If these two hash table is put in ResourceManager and exported, 
+  /* TODO: If these two hash table is put in ResourceManager and exported,
   they will cause runtime exception in visual studio. Is there any better
   way ? */
   extern HashHandle g_handleResTable;
@@ -108,8 +108,11 @@ namespace JustRenderIt
 
     char RegisterResourceLoader(BaseResourceLoader* const loader);
 
-    BaseResource* GetResource(Handle h);;
+    BaseResource* GetResource(Handle h);
 
+    /// Get the full path of a resource file
+    static bool GetResourcePath(STRING& filename,
+                                STRING folderName = EMPTY_STRING);
     DECL_SINGLETON(ResourceManager);
   };
 

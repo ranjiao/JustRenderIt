@@ -79,3 +79,21 @@ TEST(Resource, Create)
   TestResource* r = (TestResource*)(g_resourceMgr->GetResource(h1));
   EXPECT_TRUE(r != NULL);
 };
+
+TEST(ResourceManager, LoadFile)
+{
+  STRING filename = "illum.cgfx", filename2 = "notexists",
+    type1 = "shaders", type2 = "shaders/", type3 = "shaders\\";
+
+  STRING result1 = filename;
+  EXPECT_TRUE(ResourceManager::GetResourcePath(result1, type1));
+
+  STRING result2 = filename;
+  EXPECT_TRUE(ResourceManager::GetResourcePath(result2, type2));
+
+  STRING result3 = filename;
+  EXPECT_TRUE(ResourceManager::GetResourcePath(result3, type3));
+
+  EXPECT_TRUE(result1 == result2);
+  EXPECT_TRUE(result2 == result3);
+};

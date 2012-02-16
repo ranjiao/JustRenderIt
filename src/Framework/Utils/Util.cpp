@@ -227,31 +227,6 @@ STRING& JustRenderIt::Trim(STRING &s)
   return s;
 };
 
-bool JustRenderIt::SearchResource(STRING& filename, STRING folderName)
-{
-  Trim(filename);
-  Trim(folderName);
-  if(folderName[folderName.length()-1] == '/')
-    folderName = folderName.substr(0, folderName.length()-1);
-  if(folderName[0] == '/')
-    folderName = folderName.substr(1, folderName.length()-1);
-
-  if(!FileExists(filename))
-  {
-    STRING newfilename = "../Resources/";
-    newfilename += folderName + "/" + filename;
-    if(!FileExists(newfilename))
-    {
-      char str[256];
-      sprintf(str, "Couldn't open \"%s\"", filename.c_str());
-      LOG_ERROR1(str);
-      return false;
-    }
-    filename = newfilename;
-  }
-  return true;
-}
-
 DLL_DECLARE float JustRenderIt::NormalizedRand()
 {
   return rand() / (float)RAND_MAX;

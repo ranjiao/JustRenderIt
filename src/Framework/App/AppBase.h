@@ -6,38 +6,38 @@
 #include "../Common.h"
 
 #if defined USE_GUI_QT
-#define NATIVE_APP QtApp
+#define NATIVE_APP JustRenderIt::QtApp
 
 #ifndef WIN32
-#define APP_MAIN_IMPLEMENTATION(klass)  \
-int main(int argc, char *argv[])        \
-{                                       \
-  QtApp *app = new klass();             \
-  app->InitApp();                       \
-  app->StartLoop();                     \
-  delete app;                           \
-  return 0;                             \
-}
+#define APP_MAIN_IMPLEMENTATION(klass)          \
+  int main(int argc, char *argv[])              \
+  {                                             \
+    JustRenderIt::QtApp *app = new klass();     \
+    app->InitApp();                             \
+    app->StartLoop();                           \
+    delete app;                                 \
+    return 0;                                   \
+  }
 #else
-#define APP_MAIN_IMPLEMENTATION(klass)  \
+#define APP_MAIN_IMPLEMENTATION(klass)                          \
   int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hLastInst,  \
-  LPSTR lpszCmdLine, int nCmdShow)      \
-{                                       \
-  QtApp *app = new klass();             \
-  app->InitApp();                       \
-  app->StartLoop();                     \
-  delete app;                           \
-  return 0;                             \
-}
+                     LPSTR lpszCmdLine, int nCmdShow)           \
+  {                                                             \
+    JustRenderIt::QtApp *app = new klass();                     \
+    app->InitApp();                                             \
+    app->StartLoop();                                           \
+    delete app;                                                 \
+    return 0;                                                   \
+  }
 #endif
 
 #elif defined WIN32
-#define NATIVE_APP WindowsApp
+#define NATIVE_APP JustRenderIt::WindowsApp
 #define APP_MAIN_IMPLEMENTATION(klass)                                \
   int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hLastInst,        \
                      LPSTR lpszCmdLine, int nCmdShow)                 \
   {                                                                   \
-    WindowsApp* app = new klass();                                    \
+    JustRenderIt::WindowsApp* app = new klass();                      \
     app->SetInitParams(hThisInst, hLastInst, lpszCmdLine, nCmdShow);  \
     app->InitApp();                                                   \
     app->StartLoop();                                                 \
@@ -63,7 +63,7 @@ namespace JustRenderIt
 
     MOUSE_BUTTON_COUNT,
   };
-  
+
   class AppBase;
   extern DLL_DECLARE AppBase* g_app;
 
@@ -78,7 +78,7 @@ namespace JustRenderIt
     virtual ~AppBase(){};
 
     /// Everything is initialized in this function.
-    virtual void InitApp();;
+    virtual void InitApp();
     virtual FrameBase* InitFrame(){ return NULL; };
     virtual FrameBase* GetFrame(){ return m_frame; };
     virtual void StartLoop() = 0;

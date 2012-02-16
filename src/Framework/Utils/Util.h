@@ -36,9 +36,6 @@ namespace JustRenderIt
   DLL_DECLARE STRING  Trim(const char* s);
   DLL_DECLARE STRING& Trim(STRING &s);
 
-  /// Try searching resources in current folder and specified folder
-  DLL_DECLARE bool SearchResource(STRING &filename, STRING folderName);
-
   DLL_DECLARE float NormalizedRand();
 
   DLL_DECLARE float Clamp(float x, float min, float max);

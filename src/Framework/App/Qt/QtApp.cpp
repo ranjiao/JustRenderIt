@@ -1,6 +1,6 @@
 #include "Common.h"
 #include "QtApp.h"
-
+#include "Utils/Logger.h"
 
 JustRenderIt::QtApp* JustRenderIt::g_qtApp = NULL;
 
@@ -128,19 +128,22 @@ JustRenderIt::MouseButton MouseButtonConvert(Qt::MouseButton in_btn)
   case Qt::RightButton:
     btn = JustRenderIt::MOUSE_RIGHT;
     break;
+  default:
+    LOG_WARNING1("Unknown mouse button pressed.");
+    break;
   }
   return btn;
 }
 
 void JustRenderIt::QtGlWidget::mousePressEvent( QMouseEvent * event )
 {
-  
-  g_qtApp->OnMouseButton(event->x(), event->y(), 
+
+  g_qtApp->OnMouseButton(event->x(), event->y(),
     MouseButtonConvert(event->button()), true);
 }
 
 void JustRenderIt::QtGlWidget::mouseReleaseEvent( QMouseEvent * event )
 {
-  g_qtApp->OnMouseButton(event->x(), event->y(), 
+  g_qtApp->OnMouseButton(event->x(), event->y(),
     MouseButtonConvert(event->button()), false);
 }

@@ -7,6 +7,7 @@ Pipeline* JustRenderIt::g_pipeline = NULL;
 
 JustRenderIt::Pipeline::Pipeline()
 {
+  m_effect = NULL;
   m_camera = new Camera();
 
   // TODO: how to arrange multiple pipeline?
