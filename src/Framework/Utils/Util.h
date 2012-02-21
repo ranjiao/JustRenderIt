@@ -118,12 +118,18 @@ namespace JustRenderIt
     dest = ToBool(src);
     return false;
   }
-}
 
-#ifndef min
-#define min(a, b) ((a)>(b) ? (b) : (a))
-#endif
-#ifndef max
-#define max(a, b) ((a)<(b) ? (b) : (a))
-#endif
+  template<typename T>
+  T max(T a, T b)
+  {
+    return a > b ? a : b;
+  }
+
+  template<typename T>
+  T min(T a, T b)
+  {
+    return a < b ? a : b;
+  }
+}; // EOF namespace JustRenderIt
+
 #endif

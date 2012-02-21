@@ -1,0 +1,15 @@
+#include "Utils/Tokenizer.h"
+#include "Common.h"
+#include "gtest/gtest.h"
+
+using namespace std;
+using namespace JustRenderIt;
+
+TEST(Tokenizer, Load)
+{
+  char in_string[] = "this is a test string = 123;";
+
+//  Tokenizer t;
+//  t.LoadFromMemory(in_string, strlen(in_string));
+
+}

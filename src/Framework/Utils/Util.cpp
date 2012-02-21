@@ -158,6 +158,9 @@ bool JustRenderIt::FileExists(STRING filename)
 
 unsigned JustRenderIt::FileLength(STRING filename)
 {
+  if(!FileExists(filename))
+    return -1;
+
   FILE *file = fopen(filename.c_str(), "rb");
   unsigned length;
 

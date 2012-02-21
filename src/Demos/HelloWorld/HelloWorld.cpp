@@ -27,7 +27,7 @@ void HelloWorld::Render(double timeElapsed)
 
 void HelloWorld::InitApp()
 {
-  AppBase::InitApp();
+  NATIVE_APP::InitApp();
 
   m_effect = new CGEffect("illum.cgfx");
 }

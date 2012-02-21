@@ -2,7 +2,7 @@
 #define __APPBASE_H__
 
 #include <string>
-
+#include "Utils/Logger.h"
 #include "../Common.h"
 
 #if defined USE_GUI_QT
@@ -101,6 +101,13 @@ namespace JustRenderIt
 
     /// Called after every frame is rendered
     virtual void AfterRender(){};
+
+    /// TODO: Return arguments from command line
+    virtual STRING GetCmdArguments()
+    {
+      LOG_WARNING1("GetCmdArguments not implemented!");
+      return EMPTY_STRING;
+    };
 
     virtual void OnClose() = 0;
     virtual bool OnKey(unsigned key, bool down);;
