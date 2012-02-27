@@ -4,6 +4,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 # setup global path
 SET(GLOBAL_ROOT ${CMAKE_CURRENT_LIST_DIR})
 SET(GLOBAL_OUTPUT_PATH ${CMAKE_CURRENT_LIST_DIR}/bin)
+SET(CMAKE_MODULE_PATH ${GLOBAL_ROOT}/CMake)
 
 PROJECT(JustRenderIt)
 
@@ -40,11 +41,19 @@ IF(APPLE)
   ERROR("Apple is not supported right now")
 ENDIF()
 
-#find qt
+# Find qt
 FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 SET(QT_USE_OPENGL TRUE)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS} -DUSE_GUI_QT)
+
+# Find freeimage
+find_package(FreeImage REQUIRED)
+INCLUDE_DIRECTORIES(${LibFreeImage_INCLUDE_DIRS})
+
+# Find gtest
+find_package(GTest REQUIRED)
+INCLUDE_DIRECTORIES(${LibGTest_INCLUDE_DIRS})
 
 # disable some warnings for visual studio
 IF(MSVC)
