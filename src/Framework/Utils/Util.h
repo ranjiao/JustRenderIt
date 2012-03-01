@@ -41,21 +41,21 @@ namespace JustRenderIt
   DLL_DECLARE float Clamp(float x, float min, float max);
 
   /// type convert
-  int ToInt(float f);
-  int ToInt(std::string s);
-  int ToInt(int i);
+  DLL_DECLARE int ToInt(float f);
+  DLL_DECLARE int ToInt(std::string s);
+  DLL_DECLARE int ToInt(int i);
 
-  float ToFloat(int i);
-  float ToFloat(std::string s);
-  float ToFloat(float f);
+  DLL_DECLARE float ToFloat(int i);
+  DLL_DECLARE float ToFloat(std::string s);
+  DLL_DECLARE float ToFloat(float f);
 
-  std::string ToString(int i);
-  std::string ToString(float f);
-  std::string ToString(std::string s);
+  DLL_DECLARE std::string ToString(int i);
+  DLL_DECLARE std::string ToString(float f);
+  DLL_DECLARE std::string ToString(std::string s);
 
-  bool ToBool(int i);
-  bool ToBool(float f);
-  bool ToBool(std::string s);
+  DLL_DECLARE bool ToBool(int i);
+  DLL_DECLARE bool ToBool(float f);
+  DLL_DECLARE bool ToBool(std::string s);
 
   template<typename T1, typename T2>
   bool SameType(T1 v1, T2 v2)

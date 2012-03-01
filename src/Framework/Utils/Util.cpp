@@ -242,66 +242,66 @@ DLL_DECLARE float JustRenderIt::Clamp( float x, float min, float max )
   return x;
 }
 
-int ToInt(float f)
+int JustRenderIt::ToInt(float f)
 {
   return int(f);
 };
 
-int ToInt(std::string s)
+int JustRenderIt::ToInt(std::string s)
 {
   return atoi(s.c_str());
 }
 
-int ToInt(int i)
+int JustRenderIt::ToInt(int i)
 {
   return i;
 }
 
-float ToFloat(int i)
+float JustRenderIt::ToFloat(int i)
 {
   return float(i);
 };
 
-float ToFloat(std::string s)
+float JustRenderIt::ToFloat(std::string s)
 {
   return (float)atof(s.c_str());
 };
 
-float ToFloat(float f)
+float JustRenderIt::ToFloat(float f)
 {
   return f;
 };
 
-std::string ToString(int i)
+std::string JustRenderIt::ToString(int i)
 {
   char buffer[BUFFER_SIZE];
   snprintf(&buffer[0], BUFFER_SIZE, "%d", i);
   return std::string(buffer);
 };
 
-std::string ToString(float f)
+std::string JustRenderIt::ToString(float f)
 {
   char buffer[BUFFER_SIZE];
   snprintf(&buffer[0], BUFFER_SIZE, "%f", f);
   return std::string(buffer);
 }
 
-std::string ToString(std::string s)
+std::string JustRenderIt::ToString(std::string s)
 {
   return s;
 }
 
-bool ToBool(int i)
+bool JustRenderIt::ToBool(int i)
 {
   return i > 0;
 };
 
-bool ToBool(float f)
+bool JustRenderIt::ToBool(float f)
 {
   return f > 0;
 };
 
-bool ToBool(std::string s)
+bool JustRenderIt::ToBool(std::string s)
 {
   std::string temp = s;
   return s == "true";

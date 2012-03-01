@@ -50,10 +50,8 @@ TEST(Tokenizer, SkipDelim)
 TEST(Tokenizer, SkipNoDelim)
 {
   const char in_string[] = "this is a test string = 123;";
-
   Tokenizer t;
   t.LoadFromMemory(in_string, strlen(in_string));
-
   char* ptr = t.GetBuffer();
   unsigned count = t.SkipNoDelim(&ptr);
   EXPECT_TRUE(count == 4);
@@ -64,6 +62,25 @@ TEST(Tokenizer, SkipNoDelim)
   char* ptr2 = t2.GetBuffer();
   unsigned count2 = t2.SkipNoDelim(&ptr2);
   EXPECT_TRUE(count2 == 0);
+
+  char in_string3[] = "'test 1' another text";
+  Tokenizer t3;
+  t3.LoadFromMemory(in_string3);
+  char* ptr3 = t3.GetBuffer();
+  unsigned count3 = t.SkipNoDelim(&ptr3);
+  EXPECT_TRUE(count3 == 8);
+
+  char in_string4[] = "blah'test1'blah another text";
+  Tokenizer t4;
+  t4.LoadFromMemory(in_string4);
+  char* ptr4 = t4.GetBuffer();
+  unsigned count4 = t.SkipNoDelim(&ptr4);
+  EXPECT_TRUE(count4 == 4);
+  count4 = t.SkipNoDelim(&ptr4);
+  EXPECT_TRUE(count4 == 7);
+  count4 = t.SkipNoDelim(&ptr4);
+  EXPECT_TRUE(count4 == 4);
+
 }
 
 TEST(Tokenizer, SkipLine)
@@ -83,7 +100,7 @@ TEST(Tokenizer, SkipLine)
 
 TEST(Tokenizer, CrtToken)
 {
-  const char in_string[] = " 1this is \n exam # and comment \n other content";
+  const char in_string[] = " 1this is \n exam # and comment \n other";
 
   Tokenizer t;
   t.LoadFromMemory(in_string);
@@ -103,4 +120,8 @@ TEST(Tokenizer, CrtToken)
   t.Next();
   result = t.CrtToken();
   EXPECT_TRUE( result == "other" );
+
+  t.Next();
+  result = t.CrtToken();
+  EXPECT_TRUE( result == EMPTY_STRING );
 }

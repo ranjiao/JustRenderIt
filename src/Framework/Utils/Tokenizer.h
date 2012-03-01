@@ -10,6 +10,7 @@ namespace JustRenderIt
   protected:
     char *m_buffer, *m_crt, *m_next;
     char m_delim[32], m_comment[32];
+    unsigned m_crtLine;
 
     unsigned m_length;
   public:
@@ -90,13 +91,25 @@ namespace JustRenderIt
       return true;
     }
 
+    bool EndOfFile()
+    {
+      return (m_crt == m_next && m_crt != NULL);
+    }
+
+    unsigned CrtLine()
+    {
+      return m_crtLine;
+    }
+
     STRING CrtToken()
     {
       STRING result;
       char buffer[128]; // TOOD: avoid overflow
       char* ptr;
 
-      assert(m_next > m_crt);
+      assert(m_next >= m_crt);
+      if(m_next == m_crt)
+        return EMPTY_STRING;
 
       int index = 0;
       for(ptr = m_crt ; ptr != m_next && index < 128; ptr++ && index++)
@@ -109,14 +122,19 @@ namespace JustRenderIt
     void Next()
     {
       // initialize the pointers
-      if(m_crt == m_next && m_crt == NULL)
+      if(m_crt == m_next)
       {
-        m_crt = m_buffer;
-        SkipDelim(&m_crt);
+        if(m_crt == NULL)
+        {
+          m_crt = m_buffer;
+          SkipDelim(&m_crt);
 
-        m_next = m_crt;
-        SkipNoDelim(&m_next);
-        return;
+          m_next = m_crt;
+          SkipNoDelim(&m_next);
+          return;
+        }
+        else
+          return; // we hit the end of file
       }
 
       assert(m_crt && m_next);
@@ -124,6 +142,12 @@ namespace JustRenderIt
       m_crt = m_next;
       SkipNoDelim(&m_next);
       return;
+    }
+
+    STRING NextToken()
+    {
+      Next();
+      return CrtToken();
     }
 
     unsigned SkipLine(char** ptr)
@@ -138,9 +162,57 @@ namespace JustRenderIt
       // Skip \n
       buffer++;
       traveled++;
+      m_crtLine++;
 
       *ptr = buffer;
       return traveled;
+    }
+
+    unsigned SkipQuote(char** ptr)
+    {
+      char* buffer = *ptr;
+      unsigned traveled = 0;
+      int quoating = 0; // 0 for no quoating, 1 for ', 2 for "
+      for( ; *buffer != 0; buffer++ && traveled++)
+      {
+        assert(quoating >= 0 && quoating <= 2);
+        if(*buffer == '\n')
+        {
+          m_crtLine++;
+          continue;
+        }
+
+        if(quoating == 1)
+        {
+          if(*buffer != '\'')
+            continue;
+          else
+            break;
+        }
+        else if(quoating == 2)
+        {
+          if(*buffer != '"')
+            continue;
+          else
+            break;
+        }
+        else
+        {
+          if(*buffer == '\'')
+          {
+            quoating = 1;
+            continue;
+          }
+          else if(*buffer == '"')
+          {
+            quoating = 2;
+            continue;
+          }
+        }
+      }
+
+      *ptr = ++buffer;
+      return ++traveled;
     }
 
     unsigned SkipNoDelim(char** ptr)
@@ -159,9 +231,17 @@ namespace JustRenderIt
           traveled += SkipLine(&buffer);
         }
 
+      // skip quotation marks if we meet it at first
+      if(*buffer == '\'' || *buffer == '"')
+        return SkipQuote(ptr);
+
       bool isNotDelim = true, isComment = false;
       for( ; *buffer != 0 && isNotDelim && !isComment; buffer++ && traveled++)
       {
+        // stop if we hit quotation
+        if(*buffer == '\'' || *buffer == '"')
+          break;
+
         isNotDelim = true;
         for(int i=0; i<commCount; i++)
           if(*buffer == m_comment[i])
@@ -177,7 +257,7 @@ namespace JustRenderIt
           }
       }
 
-      if(traveled)
+      if(traveled && !isNotDelim)
       {
         buffer--;
         traveled--;
@@ -206,6 +286,9 @@ namespace JustRenderIt
       bool isDelim = true, isComment = false;
       for( ; *buffer != 0 && isDelim && !isComment; buffer++ && traveled++)
       {
+        if(*buffer == '\n')
+          m_crtLine++;
+
         isDelim = false;
         for(int i=0; i<commCount; i++)
           if(*buffer == m_comment[i])

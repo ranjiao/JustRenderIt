@@ -1,8 +1,10 @@
 syntax: glob
+*.swp
 *~
 build/*
 *.pdb
 *.ilk
 bin/*
+*.orig
 *.exp
 Framework.lib
