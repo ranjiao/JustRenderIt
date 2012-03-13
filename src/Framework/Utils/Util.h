@@ -3,6 +3,7 @@
 
 #include <typeinfo>
 #include <string>
+#include <cmath>
 #include "../Common.h"
 
 #ifndef LINUX
@@ -130,6 +131,8 @@ namespace JustRenderIt
   {
     return a < b ? a : b;
   }
+
+  bool equal(float a, float b, float error = 0.01);
 }; // EOF namespace JustRenderIt
 
 #endif

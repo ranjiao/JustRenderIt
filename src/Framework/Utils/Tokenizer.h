@@ -2,6 +2,7 @@
 #define __TOKENIZER_H__
 
 #include "Utils/Util.h"
+#include "Utils/Logger.h"
 
 namespace JustRenderIt
 {
@@ -47,9 +48,16 @@ namespace JustRenderIt
     bool LoadFromFile(STRING filename)
     {
       if(filename.empty())
+      {
+        LOG_ERROR1("trying to call Tokenizer::LoadFromFile with a "
+                   "empty filename");
         return false;
+      }
       if(!FileExists(filename))
+      {
+        LOG_ERROR2("can not find file for tokenizer: %s", filename.c_str());
         return false;
+      }
 
       FILE* infile = fopen(filename.c_str(), "rb");
       if(!infile)
@@ -111,8 +119,23 @@ namespace JustRenderIt
       if(m_next == m_crt)
         return EMPTY_STRING;
 
+      char *m_realNext, *m_realCrt;
+
       int index = 0;
-      for(ptr = m_crt ; ptr != m_next && index < 128; ptr++ && index++)
+      if( (*m_crt == '\'' && *(m_next - 1) == '\'') ||
+          (*m_crt == '"' && *(m_next - 1) == '"') )
+      {
+        // Get rid of the quatation marks
+        m_realCrt = m_crt + 1;
+        m_realNext = m_next - 1;
+      }
+      else
+      {
+        m_realCrt = m_crt;
+        m_realNext = m_next;
+      }
+
+      for(ptr = m_realCrt ; ptr != m_realNext && index < 128; ptr++ && index++)
         buffer[index] = *ptr;
 
       buffer[index] = 0;

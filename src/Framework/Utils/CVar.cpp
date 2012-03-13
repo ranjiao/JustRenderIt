@@ -26,7 +26,8 @@ void CVarManager::Reset()
 bool CVarManager::LoadFromFile(STRING filename)
 {
   Tokenizer t;
-  t.LoadFromFile(filename);
+  if(!t.LoadFromFile(filename))
+    return false;
 
   STRING key, value, eq;
   while(!t.EndOfFile())
@@ -41,8 +42,9 @@ bool CVarManager::LoadFromFile(STRING filename)
 
     CVar cvar(key, EMPTY_STRING, NULL);
     cvar.SetValue(value);
+    m_cvars[key] = cvar;
   }
-  return false;
+  return true;
 }
 
 bool CVarManager::LoadFromMemory(const char* data, unsigned length)
@@ -50,13 +52,10 @@ bool CVarManager::LoadFromMemory(const char* data, unsigned length)
   return false;
 }
 
-CVar CVarManager::Get(STRING name)
+CVar* CVarManager::Get(STRING name)
 {
-  CVar result;
-  return result;
-}
-
-void CVarManager::Set(CVar v)
-{
-
+  IterCVar iter = m_cvars.find(name);
+  if(iter != m_cvars.end())
+    return &iter->second;
+  return NULL;
 }

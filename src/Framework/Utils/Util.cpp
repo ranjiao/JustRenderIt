@@ -306,3 +306,8 @@ bool JustRenderIt::ToBool(std::string s)
   std::string temp = s;
   return s == "true";
 };
+
+bool JustRenderIt::equal(float a, float b, float error)
+{
+  return abs(a-b) < error;
+}

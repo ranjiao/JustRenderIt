@@ -66,10 +66,7 @@ namespace JustRenderIt
     bool LoadFromMemory(const char* data, unsigned length);
 
     /// Get a CVar
-    CVar Get(STRING name);
-
-    /// Set a CVar
-    void Set(CVar v);
+    CVar* Get(STRING name);
 
   protected:
     typedef HashMap<STRING, CVar> HashCVar;
