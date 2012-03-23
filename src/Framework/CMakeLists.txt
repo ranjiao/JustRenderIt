@@ -17,10 +17,6 @@ IF(WIN32)
     "App/Windows/*.cpp")
 ENDIF(WIN32)
 
-IF(UNIX)
-  ADD_DEFINITIONS(-DUSE_GUI_QT)
-ENDIF(UNIX)
-
 FILE(GLOB QT_HEADER "App/Qt/*.h")
 FILE(GLOB QT_SRC "App/Qt/*.cpp")
 
@@ -49,8 +45,8 @@ FILE(GLOB_RECURSE UTILS_SRC ${PROJECT_SOURCE_DIR} "Utils/*.cpp")
 FILE(GLOB CONSOLE_HEADER "Console/*.h")
 FILE(GLOB CONSOLE_SRC "Console/*.cpp")
 
-FILE(GLOB COMMON_HEADER "./*.h")
-FILE(GLOB COMMON_SRC "./*.cpp")
+FILE(GLOB COMMON_HEADER "Common/*.h")
+FILE(GLOB COMMON_SRC "Common/*.cpp")
 
 # setup groups for source file
 SOURCE_GROUP("App" FILES ${APP_SRC} ${APP_HEADER})
@@ -78,25 +74,31 @@ ADD_DEFINITIONS(-DILUT_USE_OPENGL
   -DGLEW_BUILD
   -DCRT_SECURE_NO_WARNINGS)
 
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../Dependencies/Include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DOR})
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${PROJECT_SOURCE_DIR}/../../Dependencies/Include
+  ${PROJECT_SOURCE_DIR}
+  )
 
 LINK_DIRECTORIES(${launcher_SOURCE_DIR}/../../Dependencies/Lib)
 
 # Setup sources to compile
-SET(FrameSources
+SET(FrameSourcesCpp
   ${APP_SRC} ${APP_HEADER}
   ${APP_WIN32_SRC} ${APP_WIN32_HEADER}
   ${QT_SRC} ${QT_HEADER} ${QT_GENERATED_SRC}
   ${CONSOLE_SRC} ${CONSOLE_HEADER}
   ${GRAPHICS_SRC} ${GRAPHICS_HEADER}
-  ${OPENGL_SRC} ${OPENGL_HEADER} ${OPENGL_C_SRC}
+  ${OPENGL_SRC} ${OPENGL_HEADER}
   ${PIPELINE_SRC} ${PIPELINE_HEADER}
   ${IMAGING_SRC} ${IMAGING_HEADER}
   ${UTILS_SRC} ${UTILS_HEADER}
   ${COMMON_SRC} ${COMMON_HEADER}
   ${MESH_SRC} ${MESH_HEADER}
   ${ENTITY_SRC} ${ENTITY_HEADER})
+SET(FrameSourceC
+  ${OPENGL_C_SRC})
 
 # Setup libraries to link
 SET(FrameLibraries freeimage Cg CgGL ${QT_LIBRARIES})
@@ -109,7 +111,11 @@ IF(UNIX)
   LIST(APPEND FrameLibraries GLU)
 ENDIF(UNIX)
 
-ADD_LIBRARY(Framework SHARED ${FrameSources})
+ADD_LIBRARY(Framework SHARED ${FrameSourcesCpp} ${FrameSourceC})
+
+# Precompiled header
+ADD_PRECOMPILED_HEADER(Framework
+  "${CMAKE_CURRENT_SOURCE_DIR}/Common.h" "Common.cpp" FrameSourcesCpp)
 
 # Link Framework against freeimage
 TARGET_LINK_LIBRARIES(Framework ${FrameLibraries})

@@ -5,7 +5,7 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/OpenGL/OpenGLTexture.h"
 #include "Cg/cgGL.h"
-#include "../Resource.h"
+#include "Common/Resource.h"
 
 using namespace JustRenderIt;
 

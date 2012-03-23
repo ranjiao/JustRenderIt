@@ -1,5 +1,5 @@
 #include "Common.h"
-#include "Resource.h"
+#include "Common/Resource.h"
 #include "gtest/gtest.h"
 
 using namespace std;
@@ -19,6 +19,7 @@ public:
 
   virtual char GetHash()
   {
+
     return m_index;
   }
 };

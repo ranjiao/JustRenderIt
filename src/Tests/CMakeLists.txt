@@ -8,10 +8,17 @@ IF(MSVC)
   ADD_DEFINITIONS(-D_USRDLL)
 ENDIF()
 
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  "${GLOBAL_ROOT}/src/Framework"
+  )
+
 FILE(GLOB sources "*.cpp")
 FOREACH(source ${sources})
   GET_FILENAME_COMPONENT(ExeName ${source} NAME_WE)
   ADD_EXECUTABLE(${ExeName} ${source})
+
   MESSAGE("Auto loading unit test ${ExeName}")
   TARGET_LINK_LIBRARIES(${ExeName} gtest gtest_main Framework)
   IF(UNIX)
