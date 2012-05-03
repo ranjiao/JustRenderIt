@@ -31,6 +31,17 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
   MESSAGE("Building in Linux like system")
   ADD_DEFINITIONS(-DLINUX)
   ADD_DEFINITIONS('-std=c++0x')
+
+  # Since most windows prerequisites are included in folder Dependencies,
+  # we only need to find these package in linux.
+  # Find freeimage
+  find_package(FreeImage REQUIRED)
+  INCLUDE_DIRECTORIES(${LibFreeImage_INCLUDE_DIRS})
+
+  # Find gtest
+  find_package(GTest REQUIRED)
+  INCLUDE_DIRECTORIES(${LibGTest_INCLUDE_DIRS})
+
 ENDIF()
 
 IF(WIN32)
@@ -47,14 +58,6 @@ FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 SET(QT_USE_OPENGL TRUE)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS} -DUSE_GUI_QT)
-
-# Find freeimage
-find_package(FreeImage REQUIRED)
-INCLUDE_DIRECTORIES(${LibFreeImage_INCLUDE_DIRS})
-
-# Find gtest
-find_package(GTest REQUIRED)
-INCLUDE_DIRECTORIES(${LibGTest_INCLUDE_DIRS})
 
 # Force to use warning level.3
 if(MSVC)
