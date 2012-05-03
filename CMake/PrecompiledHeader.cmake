@@ -1,12 +1,12 @@
 MACRO(ADD_PRECOMPILED_HEADER
     Target PrecompiledHeader PrecompiledSource SourcesVar)
-  SET(_sources ${${SourcesVar}})
 
   IF(MSVC)
     ADD_MSVC_PRECOMPILED_HEADER(${PrecompiledHeader}
-      ${PrecompiledSource} _sources)
+      ${PrecompiledSource} ${SourcesVar})
   ENDIF(MSVC)
 
+  SET(_sources ${${SourcesVar}})
   IF(CMAKE_COMPILER_IS_GNUCXX)
     ADD_GCC_PRECOMPILED_HEADER(${Target} ${PrecompiledHeader} _sources)
   ENDIF(CMAKE_COMPILER_IS_GNUCXX)
@@ -14,24 +14,22 @@ ENDMACRO(ADD_PRECOMPILED_HEADER)
 
 MACRO(ADD_MSVC_PRECOMPILED_HEADER
     PrecompiledHeader PrecompiledSource SourcesVar)
-  IF(MSVC)
-    GET_FILENAME_COMPONENT(PrecompiledBasename ${PrecompiledHeader} NAME_WE)
-    SET(PrecompiledBinary
-      "${CMAKE_CURRENT_BINARY_DIR}/${PrecompiledBasename}.pch")
-    SET(Sources ${${SourcesVar}})
+  GET_FILENAME_COMPONENT(PrecompiledBasename ${PrecompiledHeader} NAME_WE)
+  SET(PrecompiledBinary
+    "${CMAKE_CURRENT_BINARY_DIR}/${PrecompiledBasename}.pch")
+  SET(Sources ${${SourcesVar}})
 
-    SET_SOURCE_FILES_PROPERTIES(
-      ${PrecompiledSource}
-      PROPERTIES COMPILE_FLAGS
-      "/Yc\"${PrecompiledHeader}\" /Fp\"${PrecompiledBinary}\""
-      OBJECT_OUTPUTS "${PrecompiledBinary}")
-    SET_SOURCE_FILES_PROPERTIES(${Sources}
-      PROPERTIES COMPILE_FLAGS
-      "/Yu\"${PrecompiledBinary}\" /FI\"${PrecompiledBinary}\" /Fp\"${PrecompiledBinary}\""
-      OBJECT_DEPENDS "${PrecompiledBinary}")
-    # Add precompiled header to SourcesVar
-    LIST(APPEND ${SourcesVar} ${PrecompiledSource})
-  ENDIF(MSVC)
+  SET_SOURCE_FILES_PROPERTIES(
+    ${PrecompiledSource}
+    PROPERTIES COMPILE_FLAGS
+    "/Yc\"${PrecompiledHeader}\" /Fp\"${PrecompiledBinary}\""
+    OBJECT_OUTPUTS "${PrecompiledBinary}")
+  SET_SOURCE_FILES_PROPERTIES(${Sources}
+    PROPERTIES COMPILE_FLAGS
+    "/Yu\"${PrecompiledBinary}\" /FI\"${PrecompiledBinary}\" /Fp\"${PrecompiledBinary}\""
+    OBJECT_DEPENDS "${PrecompiledBinary}")
+  # Add precompiled header to SourcesVar
+  LIST(APPEND ${SourcesVar} ${PrecompiledSource} ${PrecompiledHeader})
 ENDMACRO(ADD_MSVC_PRECOMPILED_HEADER)
 
 IF(CMAKE_COMPILER_IS_GNUCXX)
@@ -52,6 +50,7 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
 MACRO(ADD_GCC_PRECOMPILED_HEADER _targetName _input _sources)
+  SET(_input "${CMAKE_CURRENT_SOURCE_DIR}/${_input}")
   GET_FILENAME_COMPONENT(_name ${_input} NAME)
   GET_FILENAME_COMPONENT(_path ${_input} PATH)
   SET(_outdir "${CMAKE_CURRENT_BINARY_DIR}/${_name}.gch")

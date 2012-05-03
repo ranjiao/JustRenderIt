@@ -20,7 +20,7 @@ TEST(CVar, LoadFromFile)
   EXPECT_EQ(cvar2->GetValuei(), 123);
 
   CVar* cvar3 = mgr->Get("time");
-  EXPECT_TRUE( JustRenderIt::equal(cvar3->GetValuef(), 111.254) );
+  EXPECT_TRUE( JustRenderIt::equal(cvar3->GetValuef(), 111.254f) );
 }
 
 TEST(CVar, LoadFromMemory)

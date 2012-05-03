@@ -132,7 +132,7 @@ namespace JustRenderIt
     return a < b ? a : b;
   }
 
-  bool equal(float a, float b, float error = 0.01);
+  DLL_DECLARE bool equal(float a, float b, float error = 0.01);
 }; // EOF namespace JustRenderIt
 
 #endif
