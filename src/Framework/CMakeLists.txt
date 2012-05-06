@@ -129,18 +129,23 @@ ENDIF(WIN32)
 
 IF(UNIX)
   LIST(APPEND FrameLibraries GLU)
-ENDIF(UNIX)
 
-# Precompiled header
-ADD_PRECOMPILED_HEADER(Framework
-  Common.h Common.cpp FrameSourcesCpp)
+  SET(CMAKE_SHARED_LINKER_FLAGS "-std=c++11")
+ENDIF(UNIX)
 
 ADD_LIBRARY(Framework SHARED
   ${FrameSourcesCpp} ${FrameSourcesCppHeader}
   ${FrameSourceC})
 
 # Link Framework against freeimage
-TARGET_LINK_LIBRARIES(Framework ${FrameLibraries})
+TARGET_LINK_LIBRARIES(Framework
+  ${FrameLibraries}
+  ${PrecompileHeader}
+  )
+
+# Precompiled header
+ADD_PRECOMPILED_HEADER(Framework
+  Common.h Common.cpp FrameSourcesCpp)
 
 SET(EXECUTABLE_OUTPUT_PATH ${GLOBAL_OUTPUT_PATH})
 SET(LIBRARY_OUTPUT_PATH ${GLOBAL_OUTPUT_PATH})

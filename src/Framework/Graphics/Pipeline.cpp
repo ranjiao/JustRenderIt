@@ -24,3 +24,18 @@ void JustRenderIt::Pipeline::Render( double timeElapsed )
 {
 
 }
+
+void FrameRenderer::RenderPrepare()
+{
+
+}
+
+void FrameRenderer::RenderScene()
+{
+
+};
+
+void FrameRenderer::RenderPostprocess()
+{
+
+};

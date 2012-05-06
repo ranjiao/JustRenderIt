@@ -22,6 +22,17 @@ namespace JustRenderIt
   };
 
   DLL_DECLARE extern Pipeline* g_pipeline;
+
+  /// FrameRenderer renders a single frame
+  class FrameRenderer
+  {
+  public:
+    FrameRenderer();
+
+    void RenderPrepare();
+    void RenderScene();
+    void RenderPostprocess();
+  };
 };
 
 #endif /* __PIPELINE_H__ */

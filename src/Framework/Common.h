@@ -10,8 +10,10 @@
 
 // Qt headers must be included first, or it will cause conflicts
 #ifdef USE_GUI_QT
+
 #include <QtGui>
 #include <QtGui/QMainWindow>
+
 #endif
 
 #include <string>
@@ -68,8 +70,10 @@ typedef std::string STRING;
 #define BUFFER_LENGTH 1024 * 5
 #define BIG_BUFFER_LENGTH 1024 * 1024
 
+#ifdef _MSC_VER
 #if _MSC_VER <= 1500
-#define HashMap std::tr1::unordered_map
+//#define HashMap std::tr1::unordered_map
+#endif
 #else
 #define HashMap std::unordered_map
 #endif
@@ -96,7 +100,7 @@ namespace JustRenderIt
   protected:
     bool m_isOK;
 
-    virtual void Create() 
+    virtual void Create()
     {
       assert(!m_isOK);
       internalCreate();

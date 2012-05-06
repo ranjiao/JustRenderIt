@@ -30,7 +30,7 @@ LINK_DIRECTORIES(${GLOBAL_ROOT}/bin)
 IF(CMAKE_COMPILER_IS_GNUCXX)
   MESSAGE("Building in Linux like system")
   ADD_DEFINITIONS(-DLINUX)
-  ADD_DEFINITIONS('-std=c++0x')
+  ADD_DEFINITIONS('-std=c++11')
 
   # Since most windows prerequisites are included in folder Dependencies,
   # we only need to find these package in linux.

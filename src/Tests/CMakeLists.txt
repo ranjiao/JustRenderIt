@@ -14,6 +14,9 @@ INCLUDE_DIRECTORIES(
   "${GLOBAL_ROOT}/src/Framework"
   )
 
+SET(CMAKE_CXX_FLAGS_DEBUG "-g -std=c++11")
+SET(CMAKE_CXX_FLAGS "-std=c++11")
+
 FILE(GLOB sources "*.cpp")
 FOREACH(source ${sources})
   GET_FILENAME_COMPONENT(ExeName ${source} NAME_WE)

@@ -19,17 +19,19 @@ MACRO(ADD_MSVC_PRECOMPILED_HEADER
     "${CMAKE_CURRENT_BINARY_DIR}/${PrecompiledBasename}.pch")
   SET(Sources ${${SourcesVar}})
 
+  # create preompiled header
   SET_SOURCE_FILES_PROPERTIES(
     ${PrecompiledSource}
     PROPERTIES COMPILE_FLAGS
     "/Yc\"${PrecompiledHeader}\" /Fp\"${PrecompiledBinary}\""
     OBJECT_OUTPUTS "${PrecompiledBinary}")
+
+  # use the header in sources
   SET_SOURCE_FILES_PROPERTIES(${Sources}
     PROPERTIES COMPILE_FLAGS
     "/Yu\"${PrecompiledBinary}\" /FI\"${PrecompiledBinary}\" /Fp\"${PrecompiledBinary}\""
     OBJECT_DEPENDS "${PrecompiledBinary}")
-  # Add precompiled header to SourcesVar
-  LIST(APPEND ${SourcesVar} ${PrecompiledSource} ${PrecompiledHeader})
+
 ENDMACRO(ADD_MSVC_PRECOMPILED_HEADER)
 
 IF(CMAKE_COMPILER_IS_GNUCXX)
@@ -49,16 +51,24 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
   ENDIF(gcc_compiler_version MATCHES "4\\.[0-9]\\.[0-9]")
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
-MACRO(ADD_GCC_PRECOMPILED_HEADER _targetName _input _sources)
-  SET(_input "${CMAKE_CURRENT_SOURCE_DIR}/${_input}")
+MACRO(ADD_GCC_PRECOMPILED_HEADER _targetName _inputFilename _sources)
+  SET(_compile_FLAGS ${CMAKE_CXX_FLAGS})
+
+  SET(_input "${CMAKE_CURRENT_SOURCE_DIR}/${_inputFilename}")
+  MESSAGE("_input: ${_input}")
   GET_FILENAME_COMPONENT(_name ${_input} NAME)
   GET_FILENAME_COMPONENT(_path ${_input} PATH)
   SET(_outdir "${CMAKE_CURRENT_BINARY_DIR}/${_name}.gch")
-  IF(NOT CMAKE_BUILD_TYPE)
+  IF(CMAKE_BUILD_TYPE)
     SET(_output "${_outdir}/${CMAKE_BUILD_TYPE}.c++")
-  ELSE(NOT CMAKE_BUILD_TYPE)
+    LIST(APPEND _compile_FLAGS ${CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}})
+  ELSE(CMAKE_BUILD_TYPE)
     SET(_output "${_outdir}/default.c++")
-  ENDIF(NOT CMAKE_BUILD_TYPE)
+  ENDIF(CMAKE_BUILD_TYPE)
+
+  IF(${CMAKE_BUILD_TYPE} STREQUAL "DEBUG")
+    LIST(APPEND _compile_FLAGS "-DQT_DEBUG")
+  ENDIF()
 
   ADD_CUSTOM_COMMAND(
     OUTPUT ${_outdir}
@@ -66,10 +76,9 @@ MACRO(ADD_GCC_PRECOMPILED_HEADER _targetName _input _sources)
     )
   #MAKE_DIRECTORY(${_outdir})
 
-  SET(_compile_FLAGS ${CMAKE_CXX_FLAGS})
-
   GET_DIRECTORY_PROPERTY(_directory_flags INCLUDE_DIRECTORIES)
 
+  # check the include directory.
   SET(_CMAKE_CURRENT_BINARY_DIR_included_before_path FALSE)
   FOREACH(item ${_directory_flags})
     IF(${item}  STREQUAL ${_path} AND NOT
